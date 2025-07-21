@@ -41,7 +41,7 @@ gs <- flowjo_to_gatingset(ws, path = path)
 nameKeyword <- c("GROUPNAME", "TUBENAME")
 
 TheData <- map(.x=gs, Wetlab_Concentration, subset = "CD45+",
-               nameKeyword=nameKeyword, DilutionMultiplier=100, TotalVolume=1) %>% bind_rows()
+               nameKeyword=nameKeyword, DilutionMultiplier=100, TotalVolume=0.5) %>% bind_rows()
 
 CSVName <- file.path(path, "CellCounts.csv")
 write.csv(TheData, CSVName, row.names=FALSE)
