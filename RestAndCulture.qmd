@@ -1,0 +1,51 @@
+---
+title: "Rest and Culture"
+format: html
+---
+Load required libraries
+```{r}
+#| include: FALSE
+#| warning: FALSE
+
+library(dplyr)
+library(shiny)
+library(DataEditR)
+library(purrr)
+library(gt)
+library(ghibli)
+library(Luciernaga)
+library(stringr)
+
+Palette <- ghibli_palette(name="PonyoLight", n=7, direction=1, type="discrete")
+ColorSelection <- Palette[5]
+```
+
+Next up we bring in the CellCounts, and use Dillon's Hammill's DataEditR to swap in the correct total volumes. 
+```{r}
+Linux <- file.path("/home", "david")
+OneDrive <- "C:/Users/drach/"
+#OneDrive <- "C:/Users/drach/OneDrive - University of Maryland School of Medicine"
+Windows <- file.path(OneDrive)
+
+OperatingSystem <- Sys.info()["sysname"]
+if(OperatingSystem == "Linux"){OS <- Linux
+} else if (OperatingSystem == "Windows"){OS <- Windows}
+
+OneDrive <- file.path("/home", "david")
+path <- file.path(OS, "Desktop", "CellCounts")
+
+CSVFiles <- list.files(path, pattern=".csv")
+FileInterest <- file.path(path, CSVFiles[1])
+Data <- read.csv(FileInterest, check.names=FALSE)
+
+EditableData <- Data %>% select(-TotalScientific, -TimeSeconds)
+NewData <- DataEditR::data_edit(EditableData)
+Updated <- NewData
+```
+
+```{r}
+Test <- Wetlab_Rest(data=Updated, DesiredConcentration_MillionperML=3, MaxMLperTube=1, returntype="data", outpath=path)
+Test
+#What <- What %>% filter(str_detect(name, "Spin"))
+```
+

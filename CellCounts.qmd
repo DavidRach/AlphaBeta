@@ -1,0 +1,75 @@
+---
+title: "Cell Counts"
+format: html
+---
+
+Load the required libraries. 
+```{r}
+#| include: FALSE
+#| warning: FALSE
+library(flowCore)
+library(flowWorkspace)
+library(CytoML)
+library(dplyr)
+library(purrr)
+library(lubridate)
+library(Luciernaga)
+```
+
+Bring in the FlowJo Workspace containing the count .fcs files (with adjusted gates)
+```{r}
+#| code-fold: TRUE
+Linux <- file.path("/home", "david", "Desktop")
+Windows <- file.path("C:", "Users", "drach", "Desktop")
+
+OperatingSystem <- Sys.info()["sysname"]
+if(OperatingSystem == "Linux"){OS <- Linux
+} else if (OperatingSystem == "Windows"){OS <- Windows}
+
+path <- file.path(OS, "CellCounts")
+
+FlowJoWsp <- list.files(path = path, pattern = ".wsp", full = TRUE)
+FlowJoWsp
+ws <- open_flowjo_xml(FlowJoWsp[1])
+gs <- flowjo_to_gatingset(ws, path = path)
+#keyword(gs[[1]]) #GROUPNAME #TUBENAME
+#pData(gs)
+#plot(gs)
+```
+
+```{r}
+nameKeyword <- c("GROUPNAME", "TUBENAME")
+
+TheData <- map(.x=gs, Wetlab_Concentration, subset = "CD45+",
+               nameKeyword=nameKeyword, DilutionMultiplier=100, TotalVolume=1) %>% bind_rows()
+
+CSVName <- file.path(path, "CellCounts.csv")
+write.csv(TheData, CSVName, row.names=FALSE)
+
+Today <- Sys.Date() + 1
+Notebook <- file.path("LabNotebook", Today)
+#list.files(Notebook)
+
+StorageName <- paste0("CellCounts_", Today,".csv")
+StorageLocation <- file.path(Notebook, StorageName)
+write.csv(TheData, StorageLocation, row.names=FALSE)
+
+TheData
+```
+
+```{r}
+#| eval: FALSE
+#| echo: FALSE
+
+#plot(gs)
+
+Monocytes <- map(.x=gs, Wetlab_Concentration, subset = "CD14+",
+               nameKeyword="GROUPNAME", DilutionMultiplier=100, TotalVolume=1) %>% bind_rows()
+
+Bcells <- map(.x=gs, Wetlab_Concentration, subset = "CD19+",
+               nameKeyword="GROUPNAME", DilutionMultiplier=100, TotalVolume=1) %>% bind_rows()
+
+Lymphocytes <- map(.x=gs, Wetlab_Concentration, subset = "Lymphocytes",
+               nameKeyword="GROUPNAME", DilutionMultiplier=100, TotalVolume=1) %>% bind_rows()
+```
+
