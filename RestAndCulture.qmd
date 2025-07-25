@@ -45,8 +45,18 @@ Updated <- NewData
 
 ```{r}
 Test <- Wetlab_Rest(data=Updated, DesiredConcentration_MillionperML=4, MaxMLperTube=1, returntype="data", outpath=path)
-Test |> arrange(name)
+#Test <- Test |> arrange(name)
 #What <- What %>% filter(str_detect(name, "Spin"))
+
+Today <- Sys.Date() + 1
+Notebook <- file.path("LabNotebook", Today)
+#list.files(Notebook)
+
+StorageName <- paste0("CellRestCounts_", Today,".csv")
+StorageLocation <- file.path(Notebook, StorageName)
+write.csv(Test, StorageLocation, row.names=FALSE)
+
+Test
 ```
 
 ```{r}
