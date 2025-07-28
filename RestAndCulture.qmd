@@ -44,7 +44,7 @@ Updated <- NewData
 ```
 
 ```{r}
-Test <- Wetlab_Rest(data=Updated, DesiredConcentration_MillionperML=4, MaxMLperTube=1, returntype="data", outpath=path)
+Test <- Wetlab_Rest(data=Updated, DesiredConcentration_MillionperML=6, MaxMLperTube=1, returntype="data", outpath=path)
 #Test <- Test |> arrange(name)
 #What <- What %>% filter(str_detect(name, "Spin"))
 
