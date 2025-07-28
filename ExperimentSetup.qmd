@@ -1,0 +1,30 @@
+---
+title: "Experiment Setup"
+format: html
+---
+
+```{r}
+library(HEULog)
+```
+
+```{r}
+NewExperiment()
+```
+
+```{r}
+AddSpecimens(name="INF148", vials=5)
+AddSpecimens(name="INF134", vials=5)
+AddSpecimens(name="INF191", vials=5)
+AddSpecimens(name="NY068", vials=1)
+AddSpecimens(name="ND050", vials=1)
+AddSpecimens(name="ND006", vials=1)
+```
+
+```{r}
+HEULog:::ExperimentTemplate(extras=2, blankpages=7)
+```
+
+```{r}
+print("Done")
+```
+
