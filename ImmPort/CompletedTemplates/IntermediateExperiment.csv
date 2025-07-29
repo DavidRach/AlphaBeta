@@ -1,0 +1,65 @@
+ExpsampleID,BiosampleID,ExperimentID,ReagentID,TreatmentID,CompFiles,ExpsampleName,ExpsampleDescription,AdditionalResults,StudyID,protocolIDs,SubjectID,PlannedVisitID,filename,Designation,Condition,Type,Subtype,BiosampleName,BiosampleDescription,StudyTimeCollected,StudyTimeCollectedUnit,StudyTimeToEventSpecify,ExperimentName,ExperimentDescription,MeasurementTechnique
+FCS_1,,ILT_01,,Ctrl,,,,,study_1716,,INF052,,DTR_2023_ILT_01-INF052-Ctrl_Antibody.fcs,Sample,Antibody,Cord blood,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_2,,ILT_01,,Ctrl,,,,,study_1716,,INF052,,DTR_2023_ILT_01-INF052-Ctrl_Tetramer.fcs,Sample,Tetramer,Cord blood,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_3,,ILT_01,,Ctrl,,,,,study_1716,,INF052,,DTR_2023_ILT_01-INF052-Ctrl_TetramerControl.fcs,Sample,TetramerControl,Cord blood,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_4,,ILT_01,,Ctrl,,,,,study_1716,,INF052,,DTR_2023_ILT_01-INF052-Ctrl_Unstained.fcs,Unstained,Reference Control,Cord blood,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_5,,ILT_01,,PMA,,,,,study_1716,,INF052,,DTR_2023_ILT_01-INF052-PMA_Antibody.fcs,Sample,Antibody,Cord blood,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_6,,ILT_01,,Ctrl,,,,,study_1716,,INF052,,DTR_2023_ILT_01-INF052-PMA_Unstained.fcs,Unstained,Reference Control,Cord blood,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_7,,ILT_01,,Ctrl,,,,,study_1716,,INF171,,DTR_2023_ILT_01-INF171-Ctrl_Antibody.fcs,Sample,Antibody,Cord blood,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_8,,ILT_01,,Ctrl,,,,,study_1716,,INF171,,DTR_2023_ILT_01-INF171-Ctrl_Tetramer.fcs,Sample,Tetramer,Cord blood,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_9,,ILT_01,,Ctrl,,,,,study_1716,,INF171,,DTR_2023_ILT_01-INF171-Ctrl_TetramerControl.fcs,Sample,TetramerControl,Cord blood,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_10,,ILT_01,,Ctrl,,,,,study_1716,,INF171,,DTR_2023_ILT_01-INF171-Ctrl_Unstained.fcs,Unstained,Reference Control,Cord blood,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_11,,ILT_01,,PMA,,,,,study_1716,,INF171,,DTR_2023_ILT_01-INF171-PMA_Antibody.fcs,Sample,Antibody,Cord blood,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_12,,ILT_01,,Ctrl,,,,,study_1716,,INF171,,DTR_2023_ILT_01-INF171-PMA_Unstained.fcs,Unstained,Reference Control,Cord blood,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_13,,ILT_01,,Ctrl,,,,,study_1716,,INF182,,DTR_2023_ILT_01-INF182-Ctrl_Antibody.fcs,Sample,Antibody,Cord blood,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_14,,ILT_01,,Ctrl,,,,,study_1716,,INF182,,DTR_2023_ILT_01-INF182-Ctrl_Tetramer.fcs,Sample,Tetramer,Cord blood,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_15,,ILT_01,,Ctrl,,,,,study_1716,,INF182,,DTR_2023_ILT_01-INF182-Ctrl_TetramerControl.fcs,Sample,TetramerControl,Cord blood,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_16,,ILT_01,,Ctrl,,,,,study_1716,,INF182,,DTR_2023_ILT_01-INF182-Ctrl_Unstained.fcs,Unstained,Reference Control,Cord blood,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_17,,ILT_01,,PMA,,,,,study_1716,,INF182,,DTR_2023_ILT_01-INF182-PMA_Antibody.fcs,Sample,Antibody,Cord blood,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_18,,ILT_01,,Ctrl,,,,,study_1716,,INF182,,DTR_2023_ILT_01-INF182-PMA_Unstained.fcs,Unstained,Reference Control,Cord blood,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_19,,ILT_01,,Ctrl,,,,,study_1716,,INF281,,DTR_2023_ILT_01-INF281-Ctrl_Antibody.fcs,Sample,Antibody,Cord blood,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_20,,ILT_01,,Ctrl,,,,,study_1716,,INF281,,DTR_2023_ILT_01-INF281-Ctrl_Tetramer.fcs,Sample,Tetramer,Cord blood,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_21,,ILT_01,,Ctrl,,,,,study_1716,,INF281,,DTR_2023_ILT_01-INF281-Ctrl_TetramerControl.fcs,Sample,TetramerControl,Cord blood,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_22,,ILT_01,,Ctrl,,,,,study_1716,,INF281,,DTR_2023_ILT_01-INF281-Ctrl_Unstained.fcs,Unstained,Reference Control,Cord blood,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_23,,ILT_01,,PMA,,,,,study_1716,,INF281,,DTR_2023_ILT_01-INF281-PMA_Antibody.fcs,Sample,Antibody,Cord blood,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_24,,ILT_01,,Ctrl,,,,,study_1716,,INF281,,DTR_2023_ILT_01-INF281-PMA_Unstained.fcs,Unstained,Reference Control,Cord blood,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_25,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-ND006_v1-Ctrl_Unstained.fcs,Unstained,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_26,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-ND006_v1-PMA_Unstained.fcs,Unstained,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_27,,ILT_01,,Ctrl,,,,,study_1716,,ND050,,DTR_2023_ILT_01-ND050_v1-Ctrl_Antibody.fcs,Sample,Antibody,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_28,,ILT_01,,Ctrl,,,,,study_1716,,ND050,,DTR_2023_ILT_01-ND050_v1-Ctrl_Tetramer.fcs,Sample,Tetramer,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_29,,ILT_01,,Ctrl,,,,,study_1716,,ND050,,DTR_2023_ILT_01-ND050_v1-Ctrl_Unstained.fcs,Unstained,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_30,,ILT_01,,PMA,,,,,study_1716,,ND050,,DTR_2023_ILT_01-ND050_v1-PMA_Antibody.fcs,Sample,Antibody,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_31,,ILT_01,,Ctrl,,,,,study_1716,,ND050,,DTR_2023_ILT_01-ND050_v1-PMA_Unstained.fcs,Unstained,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_32,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_CCR4 BUV615 (Cells).fcs,BUV615 CCR4,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_33,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_CCR6 BV786 (Cells).fcs,BV786 CCR6,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_34,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_CCR7 BV650 (Cells).fcs,BV650 CCR7,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_35,,ILT_01,,PMA,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_CD107a APC-R700 (Cells).fcs,APC-R700 CD107a,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_36,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_CD127 BV421 (Cells).fcs,BV421 CD127,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_37,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_CD16 APC (Cells).fcs,APC CD16,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_38,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_CD161 BV480 (Cells).fcs,BV480 CD161,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_39,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_CD25 PE-Cy5 (Cells).fcs,PE-Cy5 CD25,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_40,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_CD26 PerCP-Cy5.5 (Cells).fcs,PerCP-Cy5.5 CD26,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_41,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_CD27 APC-Fire 750 (Cells).fcs,APC-Fire 750 CD27,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_42,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_CD3 Alexa Fluor 488 (Cells).fcs,Alexa Fluor 488 CD3,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_43,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_CD3 Alexa Fluor 647 (Cells).fcs,Alexa Fluor 647 CD3,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_44,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_CD3 FITC (Cells).fcs,FITC CD3,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_45,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_CD3 Spark Blue 550 (Cells).fcs,Spark Blue 550 CD3,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_46,,ILT_01,,PMA,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_CD3_PMA APC (Cells).fcs,APC CD3_PMA,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_47,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_CD38 APC-Fire 810 (Cells).fcs,APC-Fire 810 CD38,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_48,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_CD4 BUV805 (Cells).fcs,BUV805 CD4,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_49,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_CD45RA BV510 (Cells).fcs,BV510 CD45RA,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_50,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_CD56 BV605 (Cells).fcs,BV605 CD56,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_51,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_CD62L BUV395 (Cells).fcs,BUV395 CD62L,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_52,,ILT_01,,PMA,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_CD69 BUV563 (Cells).fcs,BUV563 CD69,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_53,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_CD7 BV711 (Cells).fcs,BV711 CD7,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_54,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_CD8 BUV496 (Cells).fcs,BUV496 CD8,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_55,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_CXCR3 BUV737 (Cells).fcs,BUV737 CXCR3,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_56,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_Dump_CD14 Pacific Blue (Cells).fcs,Pacific Blue Dump_CD14,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_57,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_Dump_CD19 Pacific Blue (Cells).fcs,Pacific Blue Dump_CD19,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_58,,ILT_01,,PMA,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_IFNg BV750 (Cells).fcs,BV750 IFNg,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_59,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_NKG2D PE (Cells).fcs,PE NKG2D,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_60,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_PD1 PE-Vio770 (Cells).fcs,PE-Vio770 PD1,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_61,,ILT_01,,PMA,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_TNFa PE-Dazzle594 (Cells).fcs,PE-Dazzle594 TNFa,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_62,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_VD2 BUV661 (Cells).fcs,BUV661 VD2,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_63,,ILT_01,,Ctrl,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_Viability Zombie NIR (Cells).fcs,Zombie NIR Viability,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry
+FCS_64,,ILT_01,,PMA,,,,,study_1716,,ND006,,DTR_2023_ILT_01-Reference Group-DR_Viability_PMA Zombie NIR (Cells).fcs,Zombie NIR Viability_PMA,Reference Control,PBMC,,,,0,Days,NotSpecified,,,Spectral Flow Cytometry

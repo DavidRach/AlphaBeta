@@ -151,12 +151,58 @@ ProcessingFunction <- function(x){
             str_detect(filename, "NY[0-9]{3}") ~ str_extract(filename, "NT[0-9]{3}"),
             TRUE ~ bid))
 
-    Data |> mutate(Designation = case_when(
+    Data <- Data |> mutate(Designation = case_when(
         str_detect(filename, "Unstained") ~ "Unstained",
         str_detect(filename, "Reference Group-DR_.* \\(Cells\\)") ~ 
         str_extract(filename, "(?<=Reference Group-DR_)[^\\(]+(?= \\(Cells\\))") |>
         str_replace("^([^ ]+) (.+)$", "\\2 \\1"),
         TRUE ~ "Sample")) 
+
+    Data <- Data |> mutate(Condition =case_when(
+        str_detect(filename, "Ctrl_Antibody") ~ "Ctrl_Antibody",
+        str_detect(filename, "Ctrl_TetramerControl") ~ "Ctrl_TetramerControl",
+        str_detect(filename, "Ctrl_Tetramer.") ~ "Ctrl_Tetramer",
+        str_detect(filename, "PMA_Antibody") ~ "PMA_Antibody",
+        TRUE ~ "Reference Control"))
+
+    Data <- Data |> mutate(Treatment =case_when(
+        str_detect(filename, "Ctrl") ~ "Ctrl",
+        str_detect(filename, "PMA") ~ "PMA",
+        TRUE ~ "Reference Control"))
+
+    Data <- Data |> mutate(Condition = case_when(
+      !is.na(Condition) ~ str_remove_all(Condition, "Ctrl_|PMA_|Ctr_"),
+      TRUE ~ Condition))
+    
+    Data <- Data |> mutate(Treatment = case_when(
+      Condition == "Reference Control" & 
+        str_detect(Designation, "TNFa|IFNg|CD69|CD107a|PMA") ~ "PMA",
+      Condition == "Reference Control" & 
+        !str_detect(Designation, "TNFa|IFNg|CD69|CD107a|PMA") ~ "Ctrl",
+      TRUE ~ Treatment))
+
+    Data <- Data |> mutate(ExpsampleID=paste0("FCS_", row_number())) |>
+         mutate(BiosampleID="") |> rename(ExperimentID=Experiment, TreatmentID=Treatment) |>
+         mutate(ReagentID="") |>
+         relocate(ExpsampleID, BiosampleID, ExperimentID, ReagentID, TreatmentID, .before=1) |>
+         mutate(CompFiles="", ExpsampleName="", ExpsampleDescription="", AdditionalResults="") |>
+         relocate(CompFiles, ExpsampleName, ExpsampleDescription, AdditionalResults, .after=TreatmentID) |>
+         mutate(StudyID="study_1716") |> mutate(protocolIDs="") |> rename(SubjectID=bid) |>
+         mutate(PlannedVisitID="") |> relocate(StudyID, protocolIDs, SubjectID, PlannedVisitID, .after=AdditionalResults)
+
+    Data <- Data |> mutate(Type=case_when(
+        str_detect(SubjectID, "INF") ~ "Cord blood",
+        str_detect(filename, "ord") ~ "Cord blood",
+        TRUE ~ "PBMC" ))
+
+    Data <- Data |> mutate(Subtype="", BiosampleName="", BiosampleDescription="") |>
+        mutate(StudyTimeCollected="0", StudyTimeCollectedUnit="Days",
+        StudyTimeToEventSpecify="NotSpecified") |>
+        mutate(ExperimentName="", ExperimentDescription="",
+        MeasurementTechnique="Spectral Flow Cytometry")
+
+    write.csv(Data, "ImmPort/CompletedTemplates/IntermediateExperiment.csv", row.names=FALSE)
+    #colnames(Data)
 
 
 }
