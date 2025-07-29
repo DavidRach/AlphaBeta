@@ -62,10 +62,36 @@ paste(Items, collapse = "; ")
 # subjectHumans.txt
 
 ```{r}
-UserDefinedID = "study_1716"
-HEU-hi = "arm-cohort_1716_1" # ARM11928
-HEU-lo = "arm-cohort_1716_2" # ARM11929
-HU = "arm-cohort_1716_3" # ARM11930
+library(dplyr)
+
+#UserDefinedID = "study_1716"
+#HEU-hi = "arm-cohort_1716_1" # ARM11928
+#HEU-lo = "arm-cohort_1716_2" # ARM11929
+#HU = "arm-cohort_1716_3" # ARM11930
+
+Participants <- read.csv("ImmPort/Metadata.csv", check.names=FALSE)
+
+Assembly <- Participants |> select(bid, ptype, infant_sex) |> mutate(`MinSubjectAge`=0) |> mutate(`MaxSubjectAge`="") |> mutate(AgeUnit="Days") |>
+    mutate(AgeEvent="Age at Study Day 0") |> mutate(AgeEventSpecificity="", SubjectPhenotype="", SubjectLocation="Malawi") |> mutate(Ethnicity="Not Hispanic or Latino", Race="Black or African American") |> mutate(RaceSpecificity="", Description="", ResultSeparator="") |> mutate(ExposureProcessReported="no exposure") |> mutate(ExposureMaterialReported="") |> mutate(ExposureMaterialID="")|>
+mutate(DiseaseReported="") |> mutate(DiseaseOntologyID="") |> mutate(DiseaseStageReported="")
+
+Assembly <- Assembly |> mutate(ptype = case_when(
+    ptype == "HEU-hi" ~ "arm-cohort_1716_1",
+    ptype == "HEU-lo" ~ "arm-cohort_1716_2",
+    ptype == "HU" ~ "arm-cohort_1716_3",
+    TRUE ~ NA_character_
+  ))
+
+write.csv(Assembly, "ImmPort/CompletedTemplates/IntermediateSubjectHuman.csv", row.names=FALSE)
+```
+
+The above on attempted validation went straight to archived without checking, probably needs a complete data bundle to work. 
+
+```{r}
+#UserDefinedID = "study_1716"
+#HEU-hi = "arm-cohort_1716_1" # ARM11928
+#HEU-lo = "arm-cohort_1716_2" # ARM11929
+#HU = "arm-cohort_1716_3" # ARM11930
 
 Birth = "plannedvisit_1716_1"
 ```
@@ -98,6 +124,9 @@ subjectHumans <- data.frame(
 )
 ```
 
+# experimentSamples
+
+The final piece of the archway, needs to communicate correctly with all the other metadata bits for successful data deposition. Lets work through this piecemeal. 
 
 ```{r}
 External <- file.path("E:", "ImmPort")
@@ -106,8 +135,30 @@ x <- Experiments[1]
 ```
 
 ```{r}
+library(dplyr)
+library(stringr)
+
 ProcessingFunction <- function(x){
     ListFiles <- list.files(x)
+    Data <- data.frame(filename=ListFiles, check.names=FALSE)
+    Data <- Data |> 
+         mutate(Experiment=ListFiles) |> mutate(bid="") |>
+         mutate(Experiment=str_extract(Experiment, "ILT_[0-9]{2}")) |>
+         mutate(bid = case_when(
+            str_detect(filename, "Reference") & str_detect(filename, "Cells") ~ "ND006",
+            str_detect(filename, "INF[0-9]{3}") ~ str_extract(filename, "INF[0-9]{3}"),
+            str_detect(filename, "ND[0-9]{3}") ~ str_extract(filename, "ND[0-9]{3}"),
+            str_detect(filename, "NY[0-9]{3}") ~ str_extract(filename, "NT[0-9]{3}"),
+            TRUE ~ bid))
+
+    Data |> mutate(Designation = case_when(
+        str_detect(filename, "Unstained") ~ "Unstained",
+        str_detect(filename, "Reference Group-DR_.* \\(Cells\\)") ~ 
+        str_extract(filename, "(?<=Reference Group-DR_)[^\\(]+(?= \\(Cells\\))") |>
+        str_replace("^([^ ]+) (.+)$", "\\2 \\1"),
+        TRUE ~ "Sample")) 
+
+
 }
 ```
 
