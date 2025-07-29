@@ -48,6 +48,17 @@ write.csv(Panel2, "ImmPort/CompletedTemplates/IntermediateReagents.csv", row.nam
 
 From there, copy paste over, and edit the markers that are present on the list. 
 
+# Reagent_Sets.txt
+
+Similarly, we can go ahead and specify whether a file is stained for tetramer or for antibody. 
+
+```{r}
+Items <- Panel2 |> pull(UserDefinedID)
+paste(Items, collapse = "; ")
+```
+
+
+
 # subjectHumans.txt
 
 ```{r}
