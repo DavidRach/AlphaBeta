@@ -1,0 +1,136 @@
+---
+title: "ImmPort_experimentSamples"
+format: html
+---
+
+Working this process out programmatically from code to simplify the template completion. 
+
+# treatments.txt
+
+Please note, when no treatment is selected, nothing needs to be inputed in the amounts listed category (took three attempts of the validate tool to figure this one out)
+
+```{r}
+Alpha <- "Something"
+
+treatments <- data.frame(
+    `User Defined ID`=Alpha, #ICS_PMA
+    `Name`=Alpha, #PMA ionomycin with Brefelden Monensin
+    `Use Treatment`=Alpha, #Yes
+    `Amount Value`=Alpha, # 2
+    `Amount Unit`=Alpha, # ul
+    `Duration Value`=Alpha, # 6
+    `Duration Unit`=Alpha, # Hours
+    `Temperature Value`=Alpha, # 37
+    `Temperature Unit`=Alpha, # C
+    `Comments`=Alpha, #eBioscience Cell Stimulation Cockatail (500x), 2 ul per ml
+    check.names=FALSE
+)
+
+#Uploading treatments.txt, Cord blood mononuclear cells were treated with golgi transport inhibitors, in the presence or absence of PMA/ionomycin
+```
+
+# reagents.Flow_Cytometry.txt
+
+Ok, let's make this easy, and just tidy-rearrange the data from the CordBloodILT repo:
+
+```{r}
+library(dplyr)
+Panel <- read.csv("ImmPort/ILT_Antibody_Panels.csv", check.names=FALSE)
+Panel <- Panel |> mutate(UserDefinedID=paste(Fluorophore, Marker, sep=" ")) |> relocate(UserDefinedID, .before=1) |> filter(Panel %in% "Spectral")
+colnames(Panel)
+
+Panel1 <- Panel |> select(UserDefinedID, Manufacturer, Catalog.Number, Marker, Clone, Fluorophore)
+Panel2 <- Panel1 |> mutate(Name="", Description="", LotNumber="", Weblink="", Contact="", AntibodyRegistryID="") |> relocate(Name, Description, .after=UserDefinedID) |> relocate(LotNumber, Weblink, Contact, .after=Catalog.Number) |> relocate(AntibodyRegistryID, .after=Marker)
+write.csv(Panel2, "ImmPort/CompletedTemplates/IntermediateReagents.csv", row.names=FALSE)
+
+# Reagents for the spectral flow cytometry panel
+```
+
+From there, copy paste over, and edit the markers that are present on the list. 
+
+# subjectHumans.txt
+
+```{r}
+UserDefinedID = "study_1716"
+HEU-hi = "arm-cohort_1716_1" # ARM11928
+HEU-lo = "arm-cohort_1716_2" # ARM11929
+HU = "arm-cohort_1716_3" # ARM11930
+
+Birth = "plannedvisit_1716_1"
+```
+
+```{r}
+Alpha <- "Something"
+
+subjectHumans <- data.frame(
+    `Subject ID` = Alpha, #INF191, ND006, etc.
+    `ArmOrCohortID`=Alpha, #HEU status
+    `Sex`=Alpha, #Female, Male
+    `Min Subject Age`=Alpha, #0
+    `Max Subject Age`=Alpha,
+    `Age Unit`=Alpha, #Days ?
+    `Age Event`=Alpha, #Age at Study Day 0
+    `Age Event Specificity`=Alpha,
+    `Subject Phenotype`=Alpha,
+    `Subject Location`=Alpha, # Malawi #US: Maryland
+    `Ethnicity`=Alpha, #Not Hispanic or Latino
+    `Race`=Alpha, #Black or African American
+    `Race Specificity`=Alpha,
+    `Description`=Alpha,
+    `Result Separator Column`=NULL,
+    `Exposure Process Reported`=Alpha,
+    `Exposure Material Reported`=Alpha,
+    `Disease Reported`=Alpha,
+    `Disease Ontology ID`=Alpha,
+    `Disease Stage Reported`=Alpha,
+    check.names = FALSE
+)
+```
+
+
+```{r}
+External <- file.path("E:", "ImmPort")
+Experiments <- list.files(path=External, include.dirs=TRUE, full.names=TRUE)
+x <- Experiments[1]
+```
+
+```{r}
+ProcessingFunction <- function(x){
+    ListFiles <- list.files(x)
+}
+```
+
+Sigh... why is my solution to everything.... turn it into an R package *laugh*
+
+```{r}
+Alpha <- "Example Text"
+
+experimentSamples.Flow_Cytometry <- data.frame(
+    `ExpSample ID` = Alpha,
+    `Biosample ID` = Alpha,
+    `Experiment ID` = Alpha,
+    `Reagent IDs` = Alpha,
+    `Treatment IDs` = Alpha,
+    `FCS Result File` = Alpha,
+    `Compensation or Control File Names` = Alpha,
+    `Expsample Name`= Alpha,
+    `Expsample Description`= Alpha,
+    `Additional Result File Names`= Alpha,
+    `Study ID` = Alpha,
+    `Protocol ID` = Alpha,
+    `Subject ID` = Alpha,
+    `Planned Visit ID` = Alpha,
+    `Type`= c("Cord blood", "PBMC"),
+    `Subtype`= Alpha,
+    `Biosample Name` = Alpha,
+    `Biosample Description`= Alpha,
+    `Study Time Collected`= Alpha,
+    `Study Time Collected Unit`= Alpha,
+    `Study Time to Event` = Alpha,
+    `Study Time to Event Specificity` = Alpha,
+    `Experiment Name` = Alpha,
+    `Experiment Description`= Alpha,
+    `Measurement Technique` = "Spectral Flow Cytometry",
+     check.names=FALSE)
+```
+

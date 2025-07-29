@@ -1,0 +1,35 @@
+---
+title: "ImmPort Data Deposit"
+format: html
+---
+
+Saving these notes in the public github repository to make the process easier for the next person that needs to do this. Good luck!
+
+# Setup
+
+Please note, you can only upload .fcs files smaller than 500 MB via the ImmPort online wizard. Files larger than this need to go via the IBM Aspera Connect (see detail later for Windows/Linux differences)
+
+# Most importantly
+
+ImmPort is a repository, that has it's own particular metadata formatting that is enforced. This is for the good of the datasets for cross-utility, and although it feels like a lot, it is for the better good. 
+
+# Study Setup
+
+Note: Copy in these details from their current repo
+
+# Templates
+
+In context of our studies (SFC .fcs files primarily) we need to provide some additional metadata either in advance or alongside the .fcs files to allow for the files to be accepted (and not just archived with an error). 
+
+These files are: 
+
+- subject.Humans.txt
+- treatments.txt
+- reagents.Flow_Cytometry.txt
+- experimentSamples.Flow_Cytometry.txt
+
+Note, you can complete these in excel, but they need to be saved as tabular .txt files. 
+
+You can also via ImmPort validate your templates before the submission. 
+
+
