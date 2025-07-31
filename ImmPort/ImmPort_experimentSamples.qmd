@@ -82,7 +82,7 @@ Assembly <- Assembly |> mutate(ptype = case_when(
     TRUE ~ NA_character_
   ))
 
-#Assembly <- Assembly |> filter(bid %in% "INF052")
+Assembly <- Assembly |> filter(!bid %in% "INF052")
 
 write.csv(Assembly, "ImmPort/CompletedTemplates/IntermediateSubjectHuman.csv", row.names=FALSE)
 ```
@@ -96,16 +96,15 @@ The final piece of the archway, needs to communicate correctly with all the othe
 ```{r}
 External <- file.path("F:", "ImmPort")
 Experiments <- list.files(path=External, include.dirs=TRUE, full.names=TRUE)
-x <- Experiments[1]
+#x <- Experiments[1]
 ```
 
 ```{r}
-Experiment <- "ILT_01"
-
 library(dplyr)
 library(stringr)
 
 ProcessingFunction <- function(x){
+    Experiment <- basename(x)
     ListFiles <- list.files(x)
     Data <- data.frame(filename=ListFiles, check.names=FALSE)
     Data <- Data |> 
@@ -187,7 +186,7 @@ ProcessingFunction <- function(x){
 
     Data1 <- Data1 |> mutate(ReagentID = case_when(
       ReagentID == "BUV615 CCR4" ~ "BUV615 CD194",
-      ReagentID == "BUV737 CXCR3" ~ "BUV615 CD183",
+      ReagentID == "BUV737 CXCR3" ~ "BUV737 CD183",
       ReagentID == "BV650 CCR7" ~ "BV650 CD197",
       ReagentID == "BV786 CCR6" ~ "BV786 CD196",
       ReagentID == "PE NKG2D" ~ "PE CD314",
@@ -196,6 +195,17 @@ ProcessingFunction <- function(x){
       ReagentID == "Pacific Blue Dump_CD19" ~ "Pacific Blue CD19",
       ReagentID == "APC CD3_PMA" ~ "APC CD3",
       ReagentID == "Zombie NIR Viability_PMA" ~ "Zombie NIR Viability",
+      ReagentID == "BUV661 VD2" ~ "BUV661 Vd2",
+      TRUE ~ ReagentID
+    ))
+
+    Data1 <- Data1 |> mutate(ReagentID = case_when(
+      ReagentID == "PE-Vio770 PD1" ~ "PE-Vio 770 CD279",
+      ReagentID == "PE-Dazzle594 TNFa" ~ "PE-Dazzle 594 TNFa",
+      ReagentID == "Pacific Blue Dump_CD19" ~ "Pacific Blue CD19",
+      ReagentID == "APC CD3_PMA" ~ "APC CD3",
+      ReagentID == "Zombie NIR Viability_PMA" ~ "Zombie NIR Viability",
+      ReagentID == "BUV661 VD2" ~ "BUV661 Vd2",
       TRUE ~ ReagentID
     ))
 
@@ -231,10 +241,12 @@ ProcessingFunction <- function(x){
     #Data1 <- Data1 |> filter(BiosampleID %in% "INF052")
     #colnames(Data1)
     
-    write.csv(Data1, "ImmPort/CompletedTemplates/IntermediateExperiment.csv", row.names=FALSE)
+    #write.csv(Data1, "ImmPort/CompletedTemplates/IntermediateExperiment.csv", row.names=FALSE)
     return(Data1)
   }
+```
 
+```{r}
 Data <- ProcessingFunction(x=Experiments[1])
 
 TheseIndividuals <- Data |> pull(BiosampleID) |> unique()
@@ -249,6 +261,25 @@ ExpStorage <- file.path("ImmPort", "CompletedTemplates", ExpFiles)
 
 write.csv(SelectAssembly, HumanStorage, row.names=FALSE)
 write.csv(Data, ExpStorage, row.names=FALSE)
+```
+
+```{r}
+Data <- purrr::map(.x=Experiments[1:15], .f=ProcessingFunction) |> bind_rows()
+
+Experiment <- "AllSpecimens"
+
+TheseIndividuals <- Data |> pull(BiosampleID) |> unique()
+
+SelectAssembly <- Assembly |> filter(bid %in% TheseIndividuals)
+
+SubjectHumans <- paste0("subjectHumans_", Experiment, ".csv")
+ExpFiles <- paste0("experimentFiles_", Experiment, ".csv")
+
+HumanStorage <- file.path("ImmPort", "CompletedTemplates", SubjectHumans)
+ExpStorage <- file.path("ImmPort", "CompletedTemplates", ExpFiles)
+
+write.csv(SelectAssembly, HumanStorage, row.names=FALSE)
+#write.csv(Data, ExpStorage, row.names=FALSE)
 ```
 
 Sigh... why is my solution to everything.... turn it into an R package *laugh*
