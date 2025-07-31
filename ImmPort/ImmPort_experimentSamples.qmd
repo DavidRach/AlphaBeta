@@ -104,7 +104,7 @@ library(dplyr)
 library(stringr)
 
 ProcessingFunction <- function(x){
-    Experiment <- basename(x)
+    ExperimentName <- basename(x)
     ListFiles <- list.files(x)
     Data <- data.frame(filename=ListFiles, check.names=FALSE)
     Data <- Data |> 
@@ -247,19 +247,20 @@ ProcessingFunction <- function(x){
 ```
 
 ```{r}
-Data <- ProcessingFunction(x=Experiments[1])
+Data <- ProcessingFunction(x=Experiments[15])
 
-TheseIndividuals <- Data |> pull(BiosampleID) |> unique()
+Experiment <- "ILT_15"
 
-SelectAssembly <- Assembly |> filter(bid %in% TheseIndividuals)
+#TheseIndividuals <- Data |> pull(BiosampleID) |> unique()
+#SelectAssembly <- Assembly |> filter(bid %in% TheseIndividuals)
+#SubjectHumans <- paste0("subjectHumans_", Experiment, ".csv")
 
-SubjectHumans <- paste0("subjectHumans_", Experiment, ".csv")
 ExpFiles <- paste0("experimentFiles_", Experiment, ".csv")
 
-HumanStorage <- file.path("ImmPort", "CompletedTemplates", SubjectHumans)
+#HumanStorage <- file.path("ImmPort", "CompletedTemplates", SubjectHumans)
 ExpStorage <- file.path("ImmPort", "CompletedTemplates", ExpFiles)
 
-write.csv(SelectAssembly, HumanStorage, row.names=FALSE)
+#write.csv(SelectAssembly, HumanStorage, row.names=FALSE)
 write.csv(Data, ExpStorage, row.names=FALSE)
 ```
 
