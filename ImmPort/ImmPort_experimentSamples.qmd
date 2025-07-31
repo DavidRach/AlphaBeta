@@ -71,7 +71,7 @@ library(dplyr)
 
 Participants <- read.csv("ImmPort/Metadata.csv", check.names=FALSE)
 
-Assembly <- Participants |> select(bid, ptype, infant_sex) |> mutate(`MinSubjectAge`=0) |> mutate(`MaxSubjectAge`="") |> mutate(AgeUnit="Days") |>
+Assembly <- Participants |> select(bid, ptype, infant_sex) |> mutate(`MinSubjectAge`=0) |> mutate(`MaxSubjectAge`="") |> mutate(AgeUnit="Not Specified") |>
     mutate(AgeEvent="Age at Study Day 0") |> mutate(AgeEventSpecificity="", SubjectPhenotype="", SubjectLocation="Malawi") |> mutate(Ethnicity="Not Hispanic or Latino", Race="Black or African American") |> mutate(RaceSpecificity="", Description="", ResultSeparator="") |> mutate(ExposureProcessReported="no exposure") |> mutate(ExposureMaterialReported="") |> mutate(ExposureMaterialID="")|>
 mutate(DiseaseReported="") |> mutate(DiseaseOntologyID="") |> mutate(DiseaseStageReported="")
 
@@ -82,59 +82,26 @@ Assembly <- Assembly |> mutate(ptype = case_when(
     TRUE ~ NA_character_
   ))
 
+#Assembly <- Assembly |> filter(bid %in% "INF052")
+
 write.csv(Assembly, "ImmPort/CompletedTemplates/IntermediateSubjectHuman.csv", row.names=FALSE)
 ```
 
 The above on attempted validation went straight to archived without checking, probably needs a complete data bundle to work. 
-
-```{r}
-#UserDefinedID = "study_1716"
-#HEU-hi = "arm-cohort_1716_1" # ARM11928
-#HEU-lo = "arm-cohort_1716_2" # ARM11929
-#HU = "arm-cohort_1716_3" # ARM11930
-
-Birth = "plannedvisit_1716_1"
-```
-
-```{r}
-Alpha <- "Something"
-
-subjectHumans <- data.frame(
-    `Subject ID` = Alpha, #INF191, ND006, etc.
-    `ArmOrCohortID`=Alpha, #HEU status
-    `Sex`=Alpha, #Female, Male
-    `Min Subject Age`=Alpha, #0
-    `Max Subject Age`=Alpha,
-    `Age Unit`=Alpha, #Days ?
-    `Age Event`=Alpha, #Age at Study Day 0
-    `Age Event Specificity`=Alpha,
-    `Subject Phenotype`=Alpha,
-    `Subject Location`=Alpha, # Malawi #US: Maryland
-    `Ethnicity`=Alpha, #Not Hispanic or Latino
-    `Race`=Alpha, #Black or African American
-    `Race Specificity`=Alpha,
-    `Description`=Alpha,
-    `Result Separator Column`=NULL,
-    `Exposure Process Reported`=Alpha,
-    `Exposure Material Reported`=Alpha,
-    `Disease Reported`=Alpha,
-    `Disease Ontology ID`=Alpha,
-    `Disease Stage Reported`=Alpha,
-    check.names = FALSE
-)
-```
 
 # experimentSamples
 
 The final piece of the archway, needs to communicate correctly with all the other metadata bits for successful data deposition. Lets work through this piecemeal. 
 
 ```{r}
-External <- file.path("E:", "ImmPort")
+External <- file.path("F:", "ImmPort")
 Experiments <- list.files(path=External, include.dirs=TRUE, full.names=TRUE)
 x <- Experiments[1]
 ```
 
 ```{r}
+Experiment <- "ILT_01"
+
 library(dplyr)
 library(stringr)
 
@@ -197,15 +164,91 @@ ProcessingFunction <- function(x){
 
     Data <- Data |> mutate(Subtype="", BiosampleName="", BiosampleDescription="") |>
         mutate(StudyTimeCollected="0", StudyTimeCollectedUnit="Days",
-        StudyTimeToEventSpecify="NotSpecified") |>
+        StudyTimeToEvent="Not Specified", StudyTimeToEventSpecify="") |>
         mutate(ExperimentName="", ExperimentDescription="",
         MeasurementTechnique="Spectral Flow Cytometry")
 
-    write.csv(Data, "ImmPort/CompletedTemplates/IntermediateExperiment.csv", row.names=FALSE)
-    #colnames(Data)
+    # Finer Edits:
+    Data1 <- Data |> mutate(ExpsampleID=filename)
+    Data1$ExpsampleID <- gsub("DTR_2023_", "", Data1$ExpsampleID)
+    Data1$ExpsampleID <- gsub(".fcs", "", fixed=TRUE, Data1$ExpsampleID)
 
+    Data1 <- Data1 |> mutate(BiosampleID=SubjectID)
 
-}
+    Data1 <- Data1 |> mutate(ReagentID = case_when(
+      Condition == "Antibody" ~ "AntibodyPanel",
+      Condition == "Tetramer" ~ "TetramerPanel",
+      Condition == "TetramerControl" ~ "TetramerControlPanel",
+      Condition == "Reference Control" & Designation == "Unstained" ~ "Unstained",
+      Condition == "Reference Control" & Designation != "Unstained" ~ Designation,
+      TRUE ~"NA"))
+
+    Data1 |> pull(ReagentID) |> unique()
+
+    Data1 <- Data1 |> mutate(ReagentID = case_when(
+      ReagentID == "BUV615 CCR4" ~ "BUV615 CD194",
+      ReagentID == "BUV737 CXCR3" ~ "BUV615 CD183",
+      ReagentID == "BV650 CCR7" ~ "BV650 CD197",
+      ReagentID == "BV786 CCR6" ~ "BV786 CD196",
+      ReagentID == "PE NKG2D" ~ "PE CD314",
+      ReagentID == "PE-Vio 770 PD1" ~ "PE-Vio 770 CD279",
+      ReagentID == "Pacific Blue Dump_CD14" ~ "Pacific Blue CD14",
+      ReagentID == "Pacific Blue Dump_CD19" ~ "Pacific Blue CD19",
+      ReagentID == "APC CD3_PMA" ~ "APC CD3",
+      ReagentID == "Zombie NIR Viability_PMA" ~ "Zombie NIR Viability",
+      TRUE ~ ReagentID
+    ))
+
+    #Data1 <- Data1 |> mutate(ReagentID = case_when(
+    #  ReagentID == AntibodyPanel ~ "LongList",
+    #  ReagentID == TetramerPanel ~ "LongList",
+    #  ReagentID == TetramerControlPanel ~ "LongList",
+    #  TRUE ~ ReagentID
+    #))
+
+    Data1 <- Data1 |> mutate(TreatmentID = case_when(
+      TreatmentID == "Ctrl" ~ "ICS_Media",
+      TreatmentID == "PMA" ~ "ICS_PMA",
+      TRUE ~ TreatmentID))
+
+    Data1 <- Data1 |> mutate(protocolIDs="protocol_1716_1")
+    Data1 <- Data1 |> mutate(PlannedVisitID="plannedvisit_1716_1")
+
+    Data1 <- Data1 |> mutate(Type = case_when(
+      str_detect(ExpsampleID, "Beads") ~ "Other",
+      TRUE ~ Type))
+
+    Data1 <- Data1 |> mutate(Subtype = case_when(
+      Type == "Other" ~ "Beads",
+      TRUE ~ ""))
+
+    Data1 <- Data1 |> mutate(ExperimentName=ExperimentID)
+
+    Data1 <- Data1 |> relocate(filename, .after=TreatmentID)
+
+    Data1  <- Data1 |> select(-Designation, -Condition)
+
+    #Data1 <- Data1 |> filter(BiosampleID %in% "INF052")
+    #colnames(Data1)
+    
+    write.csv(Data1, "ImmPort/CompletedTemplates/IntermediateExperiment.csv", row.names=FALSE)
+    return(Data1)
+  }
+
+Data <- ProcessingFunction(x=Experiments[1])
+
+TheseIndividuals <- Data |> pull(BiosampleID) |> unique()
+
+SelectAssembly <- Assembly |> filter(bid %in% TheseIndividuals)
+
+SubjectHumans <- paste0("subjectHumans_", Experiment, ".csv")
+ExpFiles <- paste0("experimentFiles_", Experiment, ".csv")
+
+HumanStorage <- file.path("ImmPort", "CompletedTemplates", SubjectHumans)
+ExpStorage <- file.path("ImmPort", "CompletedTemplates", ExpFiles)
+
+write.csv(SelectAssembly, HumanStorage, row.names=FALSE)
+write.csv(Data, ExpStorage, row.names=FALSE)
 ```
 
 Sigh... why is my solution to everything.... turn it into an R package *laugh*
