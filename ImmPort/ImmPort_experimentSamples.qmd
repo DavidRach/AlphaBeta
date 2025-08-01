@@ -122,6 +122,9 @@ ProcessingFunction <- function(x){
         str_detect(filename, "Reference Group-DR_.* \\(Cells\\)") ~ 
         str_extract(filename, "(?<=Reference Group-DR_)[^\\(]+(?= \\(Cells\\))") |>
         str_replace("^([^ ]+) (.+)$", "\\2 \\1"),
+        str_detect(filename, "Reference Group-DR_.* \\(Beads\\)") ~ 
+        str_extract(filename, "(?<=Reference Group-DR_)[^\\(]+(?= \\(Beads\\))") |>
+        str_replace("^([^ ]+) (.+)$", "\\2 \\1"),
         TRUE ~ "Sample")) 
 
     Data <- Data |> mutate(Condition =case_when(
@@ -247,9 +250,11 @@ ProcessingFunction <- function(x){
 ```
 
 ```{r}
-Data <- ProcessingFunction(x=Experiments[15])
+Data <- ProcessingFunction(x=Experiments[1])
 
-Experiment <- "ILT_15"
+Data <- Data |> mutate(BiosampleID="ND006", SubjectID="ND006")
+
+Experiment <- "ILT_00"
 
 #TheseIndividuals <- Data |> pull(BiosampleID) |> unique()
 #SelectAssembly <- Assembly |> filter(bid %in% TheseIndividuals)
