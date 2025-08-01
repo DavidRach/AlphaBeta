@@ -1,0 +1,160 @@
+---
+title: "LuciernagaAF"
+format: html
+---
+
+# Load Library
+
+```{r}
+library(flowCore)
+library(flowWorkspace)
+library(openCyto)
+library(data.table)
+library(Luciernaga)
+library(stringr)
+```
+
+# Find our File
+```{r}
+Location <- "/media/david/DavidRach/U01_Myeloid"
+Folders <- list.files(Location)
+
+thenumber <- 4
+
+x <- Folders[thenumber]
+thex <- as.character(x)
+path <- file.path(Location, x)
+
+
+#TheUnstaineds <- list.files(path=path, pattern="^Unstained", full.names=TRUE)
+#TheUnstaineds <- list.files(path=path, pattern="CD107a", full.names=TRUE)
+TheUnstaineds <- list.files(path=path, pattern=".fcs", full.names=TRUE)
+
+if (length(TheUnstaineds) == 1){
+  file <- TheUnstaineds
+} else {message("Multiple items are present!!!!")}
+```
+
+# Load the File into a Flow Format
+```{r}
+MyCytoSet <- load_cytoset_from_fcs(TheUnstaineds, truncate_max_range = FALSE, transform = FALSE)
+MyGatingSet <- GatingSet(MyCytoSet)
+```
+
+
+# Applied Gates
+
+```{r}
+FileLocation <- system.file("extdata", package = "Luciernaga")
+MyGates <- fread(file.path(path = FileLocation, pattern = 'Gates.csv'))
+MyGates <- MyGates
+MyGates[5,1] <- "monocytes"
+MyGates[5,4] <- "SSC-A"
+MyGates[5,5] <- "gate_mindensity"
+MyGates[5,6] <- "gate_range=c(1.25e6, 2e6)"
+```
+
+```{r}
+MyGatingTemplate <- gatingTemplate(MyGates)
+gt_gating(MyGatingTemplate, MyGatingSet)
+plot(MyGatingSet)
+```
+
+# Validated the Gating
+```{r}
+removestrings <-  c("(Cells)", ".fcs", " ")
+StorageLocation <- file.path("/home", "david", "Desktop")
+
+thefirstfilename <- paste0(thex, "_Unstained_", thenumber)
+
+IndividualPlot <- Utility_GatingPlots(x=MyGatingSet[[1]], sample.name = "GUID",
+                                      removestrings = removestrings, gtFile = MyGates,
+                                      DesiredGates = NULL, outpath = StorageLocation,
+                                      filename = thefirstfilename, returnType="pdf")
+
+IndividualPlot[1]
+#pData(MyGatingSet)
+```
+
+
+# Extracting Autofluorescence
+
+```{r}
+FileLocation <- system.file("extdata", package = "Luciernaga")
+pattern = "AutofluorescentOverlaps.csv"
+AFOverlap <- list.files(path=FileLocation, pattern=pattern,
+                        full.names = TRUE)
+AFOverlap_CSV <- read.csv(AFOverlap, check.names = FALSE)
+AFOverlap_CSV
+```
+
+
+```{r}
+removestrings <- ".fcs"
+
+outpath <- file.path("/home", "david", "Desktop", "WinterAFs")
+
+
+UnstainedSignature <- Luciernaga_QC(x=MyGatingSet[1],
+                                    subsets="monocytes", 
+                                    removestrings=removestrings,
+                                    sample.name="GUID",
+                                    unmixingcontroltype = "cells",
+                                    Unstained = TRUE, 
+                                    ratiopopcutoff = 0.01,
+                                    Verbose = TRUE,
+                                    AFOverlap = AFOverlap,
+                                    stats = "median",
+                                    ExportType = "data",
+                                    SignatureReturnNow = FALSE,
+                                    outpath = outpath,
+                                    Increments=0.1, experiment="Test",
+                                    condition="test")
+
+#View(UnstainedSignature)
+#colnames(UnstainedSignature)
+```
+
+```{r}
+library(dplyr)
+Clusters <- sub("_.*", "", UnstainedSignature$Cluster)
+
+ClustersData <- data.frame(table(Clusters)) |> arrange(desc(Freq)) |> pull(Clusters)
+```
+
+```{r}
+
+#' @importFrom dplyr select filter pull
+#' @importFrom stringr str_detect
+#' @importFrom plotly ggplotly
+SignatureVariants <- function(x, data, returnType){
+  x <- as.character(x)
+
+  UnstainedSignature1 <- data |>
+     dplyr::select(-Sample, -Experiment, -Condition, -Count)
+
+  These <- UnstainedSignature1  |> dplyr::filter(str_detect(Cluster, paste0("^", x))) |> dplyr::pull(Cluster) |> unique()
+
+  Plots <- Luciernaga::QC_ViewSignature(x=These, columnname="Cluster", data=UnstainedSignature1, Normalize=TRUE,TheFormat="wider", legend=FALSE)
+
+  if (returnType == "plots"){
+    return(Plots)
+    } else {
+      Plots <- plotly::ggplotly(Plots)
+      return(Plots)
+    }
+}
+```
+
+```{r}
+Plots <- purrr::map(.x=ClustersData, .f=SignatureVariants, data=UnstainedSignature, returnType="plots")
+
+StorageLocation
+
+thefilename <- paste0("Signatures_", thenumber)
+
+Utility_Patchwork(x=Plots, filename=thefilename, outfolder=StorageLocation)
+```
+```{r}
+print("Go!")
+```
