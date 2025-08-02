@@ -1,0 +1,56 @@
+---
+title: "openCyto protocol"
+format: html
+---
+
+Goal is to take the newly copied files from the external hard drive folder, verify whether they have been already visualized. If not, proceed to create a GatingSet with specification by condition. From there, generate Unity plots, RidgePlots, and NxN plots for initial evaluation of unmixing quality for the respective major cell populations, flagging areas of concern for Luciernaga informed secondary unmixing. 
+
+# Getting Started
+```{r}
+library(HEULog)
+```
+
+```{r}
+Location <- HEULog::ExternalDriveLocate(Experiment="AlphaBeta")
+FCSFiles <- list.files(Location, pattern=".fcs", full.names=TRUE, recursive=FALSE)
+Samples <- FCSFiles[-grep("Unstained", FCSFiles)]
+```
+```{r}
+ExperimentsPresent <- sub("-.*", "", basename(Samples)) |> unique()
+```
+
+```{r}
+#| eval: FALSE
+
+# Setup for data folder and ProcessedExperiments.csv
+IsDataPresent <- list.files(include.dirs=TRUE)
+if (!any(IsDataPresent %in% "data")){dir.create("data")}
+CSVFiles <- list.files("data", pattern="VisualizedExperiments.csv")
+
+if (length(CSVFiles) == 0){
+    ProcessedExperiments <- data.frame(Experiment="Test", Date="2000-01-01")
+    filename <- "VisualizedExperiments.csv"
+    StorageLocation <- file.path("data", filename)
+    write.csv(ProcessedExperiments, StorageLocation, row.names=FALSE)
+}
+```
+
+```{r}
+CSV <- paste(                                                
+      "https://raw.githubusercontent.com",                  
+      "DavidRach", "AlphaBeta",                   
+      "main", "data", "VisualizedExperiments.csv",                              
+      sep = "/"                                             
+    ) 
+
+Data <- read.csv(CSV, check.names=FALSE)
+AlreadyVisualized <- Data |> pull(Experiment)
+
+
+TheseFolders <- basename(ExperimentsPresent)
+
+UpdatedData <- purrr::map(.x=TheseFolders, .f=ExperimentVisualized, parsed=AlreadyVisualized, parentFolder=OS) |> bind_rows()
+NewlyProcessed <- bind_rows(Data, UpdatedData)
+write.csv(NewlyProcessed, "data/ProcessedExperiments.csv", row.names=FALSE)
+```
+

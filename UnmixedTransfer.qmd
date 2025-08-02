@@ -42,7 +42,7 @@ Experiments <- list.files(OS, pattern="AB_", full.names=TRUE)
 # Setup for data folder and ProcessedExperiments.csv
 IsDataPresent <- list.files(include.dirs=TRUE)
 if (!any(IsDataPresent %in% "data")){dir.create("data")}
-CSVFiles <- list.files("data", pattern=".csv")
+CSVFiles <- list.files("data", pattern="ProcessedExperiments.csv")
 
 if (length(CSVFiles) == 0){
     ProcessedExperiments <- data.frame(Experiment="Test", Date="01-01-2000")
