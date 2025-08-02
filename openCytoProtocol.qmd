@@ -7,7 +7,12 @@ Goal is to take the newly copied files from the external hard drive folder, veri
 
 # Getting Started
 ```{r}
+#| message: FALSE
+#| warning: FALSE
+
 library(HEULog)
+library(dplyr)
+library(purrr)
 ```
 
 ```{r}
@@ -46,11 +51,20 @@ CSV <- paste(
 Data <- read.csv(CSV, check.names=FALSE)
 AlreadyVisualized <- Data |> pull(Experiment)
 
-
-TheseFolders <- basename(ExperimentsPresent)
-
-UpdatedData <- purrr::map(.x=TheseFolders, .f=ExperimentVisualized, parsed=AlreadyVisualized, parentFolder=OS) |> bind_rows()
+#| x <- ExperimentsPresent[1]
+UpdatedData <- purrr::map(.x=ExperimentsPresent, .f=ExperimentVisualized, visualized=AlreadyVisualized, parentFolder=OS) |> bind_rows()
 NewlyProcessed <- bind_rows(Data, UpdatedData)
-write.csv(NewlyProcessed, "data/ProcessedExperiments.csv", row.names=FALSE)
+#write.csv(NewlyProcessed, "data/ProcessedExperiments.csv", row.names=FALSE)
 ```
 
+
+```{r}
+
+ExperimentVisualized <- function(x, visualized){
+    Status <- x %in% visualized
+    ExperimentName <- x
+    if (Status == TRUE){return(Status)}
+
+}
+
+```
