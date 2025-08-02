@@ -13,6 +13,7 @@ Goal is to take the newly copied files from the external hard drive folder, veri
 library(HEULog)
 library(dplyr)
 library(purrr)
+library(flowWorkspace)
 ```
 
 ```{r}
@@ -20,6 +21,7 @@ Location <- HEULog::ExternalDriveLocate(Experiment="AlphaBeta")
 FCSFiles <- list.files(Location, pattern=".fcs", full.names=TRUE, recursive=FALSE)
 Samples <- FCSFiles[-grep("Unstained", FCSFiles)]
 ```
+
 ```{r}
 ExperimentsPresent <- sub("-.*", "", basename(Samples)) |> unique()
 ```
@@ -45,26 +47,50 @@ CSV <- paste(
       "https://raw.githubusercontent.com",                  
       "DavidRach", "AlphaBeta",                   
       "main", "data", "VisualizedExperiments.csv",                              
-      sep = "/"                                             
-    ) 
+      sep = "/") 
 
 Data <- read.csv(CSV, check.names=FALSE)
 AlreadyVisualized <- Data |> pull(Experiment)
-
-#| x <- ExperimentsPresent[1]
-UpdatedData <- purrr::map(.x=ExperimentsPresent, .f=ExperimentVisualized, visualized=AlreadyVisualized, parentFolder=OS) |> bind_rows()
-NewlyProcessed <- bind_rows(Data, UpdatedData)
-#write.csv(NewlyProcessed, "data/ProcessedExperiments.csv", row.names=FALSE)
+#x <- ExperimentsPresent[1]
+visualized <- AlreadyVisualized
+files <- Samples
+conditions <- c("Ctrl", "PPD", "SEB")
 ```
 
+```{r}
+template <- "GatesUnmixed.csv"
+```
 
 ```{r}
-
-ExperimentVisualized <- function(x, visualized){
+#ExperimentVisualized <- function(x, visualized, files, conditions, template){
     Status <- x %in% visualized
     ExperimentName <- x
     if (Status == TRUE){return(Status)}
 
-}
+    internalfiles <- files[grep(ExperimentName, files)]
 
+    #| x <- conditions[1]
+    map(.x=conditions, internalfiles=internalfiles, template=template)
+
+#}
+```
+
+```{r}
+
+#' Creates GatingSet and visualizes data
+#' 
+#' @importFrom flowWorkspace load_cytoset_from_fcs GatingSet
+#' 
+ConditionVisualized <- function(x, internalfiles, template){
+    files <- internalfiles[grep(x, internalfiles)]
+    MyCytoSet <- load_cytoset_from_fcs(files, truncate_max_range = FALSE,
+                                   transformation = FALSE)
+    MyGatingSet <- GatingSet(MyCytoSet)
+
+    # Now we transform
+
+    # Now we gate
+    
+
+}
 ```
