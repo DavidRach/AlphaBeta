@@ -11,9 +11,12 @@ Goal is to take the newly copied files from the external hard drive folder, veri
 #| warning: FALSE
 
 library(HEULog)
+library(Luciernaga)
 library(dplyr)
 library(purrr)
 library(flowWorkspace)
+library(openCyto)
+library(flowCore)
 ```
 
 ```{r}
@@ -51,116 +54,7 @@ CSV <- paste(
 
 Data <- read.csv(CSV, check.names=FALSE)
 AlreadyVisualized <- Data |> pull(Experiment)
-#x <- ExperimentsPresent[1]
-visualized <- AlreadyVisualized
-files <- Samples
-conditions <- c("Ctrl", "PPD", "SEB")
-channelRange <- 256
-maxValue <- 1000000
-pos <- 5.25
-neg <- 0
-width <- -1000
-```
 
-```{r}
-template <- "GatesUnmixed.csv"
-```
-
-```{r}
-ExperimentVisualized <- function(x, visualized, files, conditions, template,
-    channelRange=256, maxValue=1000000, pos=5.25, neg=0, width=-1000){
-
-    Status <- x %in% visualized
-    ExperimentName <- x
-    if (Status == TRUE){return(Status)}
-
-    internalfiles <- files[grep(ExperimentName, files)]
-
-    #| x <- conditions[1]
-    map(.x=conditions, internalfiles=internalfiles, template=template,
-    channelRange=channelRange, maxValue=maxValue, pos=pos, neg=neg,
-    width=width, ExperimentName=ExperimentName)
-
-}
-```
-
-```{r}
-
-#' Creates GatingSet and visualizes data
-#' 
-#' @importFrom flowWorkspace load_cytoset_from_fcs GatingSet flowjo_biexp_trans
-#'  transformerList
-#' @importFrom flowCore transform
-#' @importFrom data.table fread
-#' @importFrom openCyto gatingTemplate
-#' @importFrom purrr map
-#' @importFrom Luciernaga Utility_GatingPlots Utility_Patchwork
-#' 
-ConditionVisualized <- function(x, internalfiles, template,
- channelRange, maxValue, pos, neg, width, experimentdesignation="AB"){
-    ConditionName <- x
-    # Load GatingSet
-    files <- internalfiles[grep(x, internalfiles)]
-    MyCytoSet <- load_cytoset_from_fcs(files, truncate_max_range = FALSE,
-                                   transformation = FALSE)
-    MyGatingSet <- GatingSet(MyCytoSet)
-
-    # Now we transform
-    TheColNames <- colnames(MyGatingSet)
-    SelectedColumns <- TheColNames[-grep("Time|FS|SC|SS|Original|-W$|-H$|AF", TheColNames)]
-    Biexponential <- flowjo_biexp_trans(channelRange=channelRange,
-     maxValue=maxValue, pos=pos, neg=neg, width=width)
-    TransformList <- transformerList(SelectedColumns, Biexponential)
-    MyGatingSet <- transform(MyGatingSet, TransformList)
-
-    # Now we gate
-
-    UnmixedGates <- data.table::fread(template)
-    UnmixedGating <- gatingTemplate(UnmixedGates)
-    gt_gating(UnmixedGating, MyGatingSet)
-
-    Plots <- purrr::map(.x=MyGatingSet, .f=Utility_GatingPlots,
-     sample.name=c("GROUPNAME", "TUBENAME"),
-     removestrings=c("Unmixed", "(", ")", ".fcs"),
-     gtFile=UnmixedGates, 
-     outpath=NULL,
-     returnType="patchwork",
-     plotname=TRUE)
-
-    experimentdesignation <- "AB"
-    Experiment <- sub(paste0("_", experimentdesignation, ".*"), "", ExperimentName)
-    Experiment <- gsub("_", "-", Experiment)
-
-    LabFiles <- list.files("LabNotebook", include.dirs=TRUE)
-    if (!Experiment %in% LabFiles)(stop("LabNotebook for ", Experiment, " is not present"))
-    
-    Notebook <- file.path("LabNotebook", Experiment)
-    NotebookFiles <- list.files(Notebook, include.dirs=TRUE)
-
-    if (!"Visuals" %in% NotebookFiles){
-        Visuals <- file.path(Notebook, "Visuals")
-        dir.create(Visuals)
-    } else {Visuals <- file.path(Notebook, "Visuals")}
-
-    #VisualFiles <- list.files(Visuals)
-
-    fileName <- paste(ExperimentName, ConditionName, sep="-")
-    fileName <- paste(fileName, "Visuals", sep="_")
-
-    Utility_Patchwork(x=Plots, filename=fileName, outfolder=Visuals,
-    thecolumns = 1, therows=1, returntype="pdf", NotListofList = FALSE,
-    patches=TRUE)
-
-    # And from here subfolders
-}
-
-
-
-
-
-
-InverseBiexponential <- flowjo_biexp(inverse=TRUE, channelRange=256, maxValue=1000000, pos=5.25, neg=0, width=-1000)
-ReverseBiexponential <- transformList(selected_columns, InverseBiexponential)
-
-NormalizeGS2 <- transform(Chicanery, ForwardBiexponential)
+ExperimentVisualized(x=ExperimentsPresent[2], visualize=AlreadyVisualized,
+ files=Samples, conditions=c("Ctrl"), template="GatesUnmixed.csv")
 ```
