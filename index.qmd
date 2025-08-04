@@ -8,3 +8,72 @@ project:
   output-dir: docs/
 ---
 
+```{r}
+#| warning: false
+#| message: false
+#| include: true
+
+library(dplyr)
+library(lubridate)
+library(gtsummary)
+library(gt)
+```
+
+```{r}
+#| include: FALSE
+Metadata <- read.csv("data/openCytoRatios.csv", check.names=FALSE)
+```
+
+```{r}
+#| include: FALSE
+SelectData <- Metadata |> filter(Condition %in% "PPD") |> filter(timepoint %in% 0) |> select(ptype, infant_sex, screen_vl, del_vl, del_cd4, gestage_d1)
+
+SelectData$ptype <- factor(SelectData$ptype, levels=c("HU", "HEU-lo", "HEU-hi"))
+
+SelectData$gestage_d1 <- round(SelectData$gestage_d1, 1)
+
+Table1 <- SelectData |> 
+  tbl_summary(
+    by = "ptype",
+    include = c(infant_sex, screen_vl, del_vl, del_cd4, gestage_d1),
+    type = list(
+      screen_vl ~ "continuous",
+      del_vl ~ "continuous",
+      del_cd4 ~ "continuous",
+      gestage_d1 ~ "continuous"),
+    label = c(screen_vl ~ "Maternal viral load (screening)",  
+                                     del_vl ~ "Detectable viral load (delivery)", 
+                                     del_cd4 ~ md(paste0("Maternal CD4+ cells/", "\U00B5L", " (delivery)")), 
+                                     infant_sex ~ "Infant sex (Female)",
+                                     gestage_d1 ~ "Estimated Gestational Age, weeks"),
+    value = list(infant_sex ~ "Female"),
+    missing_text = "NA",
+    missing = "no"
+  ) %>% modify_header(label ~ "**Demographics**") %>% modify_caption("**Cohort Characteristics**") 
+```
+
+```{r}
+#| label: tbl-demographics
+#| echo: false
+Table1
+```
+
+```{r}
+#| include: FALSE
+#| message: FALSE
+#| warning: FALSE
+
+StorageLocation <- "Figures/MainFigures/Table1"
+Bolded <- Table1 |> as_gt()
+
+#StorageLocation <- file.path(StorageLocation, "Table1.png")
+#TheGTTable |> gtsave(StorageLocation, vwidth = 1500, vheight = 1000)
+
+FinalStorage <- file.path(StorageLocation, "Table1.docx")
+gtsave(Bolded, FinalStorage)
+
+FinalStorage <- file.path(StorageLocation, "Table1.html")
+gtsave(Bolded, FinalStorage)
+```
+
+
