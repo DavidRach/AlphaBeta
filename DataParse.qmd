@@ -1,0 +1,101 @@
+---
+title: "Results"
+format: html
+---
+
+```{r}
+library(dplyr)
+library(purrr)
+library(tidyr)
+library(stringr)
+```
+
+```{r}
+Folders <- list.files("LabNotebook", pattern="2025-", include.dirs=TRUE, full.names=TRUE)
+```
+
+```{r}
+#' Parses out the current data folders for data .csv files
+#' 
+#' @importFrom dplyr mutate bind_rows
+#' @importFrom utils read.csv
+#' 
+#' @return A combined .csv file for the experiment day with condition column
+#' 
+#' @export
+DataLocate <- function(x){
+    Date <- basename(x)
+
+    DataFolder <- file.path(x, "data")
+    Files <- list.files(DataFolder, full.names=TRUE)
+    if (length(Files) == 0){return(NULL)}
+
+    Control <- Files[grep("Ctrl", Files)]
+    Control <- read.csv(Control, check.names=FALSE) |> dplyr::mutate(Condition="Ctrl") 
+
+    PPD <- Files[grep("PPD", Files)]
+    PPD <- read.csv(PPD, check.names=FALSE) |> dplyr::mutate(Condition="PPD")
+
+    SEB <- Files[grep("SEB", Files)]
+    SEB <- read.csv(SEB, check.names=FALSE) |> dplyr::mutate(Condition="SEB")
+
+    Dataset <- bind_rows(Control, PPD, SEB)
+
+    Dataset <- Dataset |> mutate(Date=Date)
+    return(Dataset)
+}
+```
+
+```{r}
+# x <- Folders[2]
+FolderReturns <- map(.f=DataLocate, .x=Folders)
+Saved <- purrr::compact(FolderReturns)
+Dataset <- bind_rows(Saved)
+```
+
+```{r}
+#colnames(Dataset)
+Dataset <- Dataset |> mutate(bid = stringr::str_extract(sample, "(?<=-)[A-Za-z0-9]+(?=-)"))
+Dataset <- Dataset |> mutate(pop = stringr::str_extract(pop, "[^/]+$"))
+Dataset <- Dataset |> tidyr::pivot_wider(names_from="pop", values_from="count")
+
+Dataset <- Dataset %>% mutate(across(13:ncol(.), ~ . /lymphocytes)) |> mutate(lymphocytes_count=lymphocytes)
+Dataset <- Dataset %>% mutate(across(10:12, ~ . /CD45)) |> mutate(NotMonocytes = 1 - NotMonocytes) |> mutate(nonDebris = 1 - nonDebris)
+Dataset <- Dataset |> mutate(CD45 = CD45/singletsSSCB)
+Dataset <- Dataset |>  mutate(timepoint = str_extract(sample, "(?<=-)[^-_]+(?=_[^_]*\\.fcs$)"))
+Dataset <- Dataset |> select(-sample) |> relocate(bid, timepoint, Condition, Date, .before="root")
+Dataset <- Dataset |> mutate(bid = case_when(timepoint == "NY068" ~ "NY068", TRUE ~ bid))
+```
+
+```{r}
+Dataset1 <- Dataset |> dplyr::filter(!bid %in% "NY068")
+
+ReferenceData <- file.path("C:", "Users", "12692", "Documents", "HEUData", "data") #Generalize for different computers
+file <- list.files(ReferenceData, "U01Metadata2025.csv", full.names=TRUE)
+Metadata <- read.csv(file, check.names=FALSE) |> select(bid, infant_sex, ptype, screen_vl, del_vl, del_cd4, gestage_d1,
+ delivdt, Infant_Collection_Date_4, Infant_Collection_Date_9)
+Metadata$screen_vl <- as.numeric(Metadata$screen_vl)
+Metadata$del_vl <- as.numeric(Metadata$del_vl)
+Metadata$del_cd4 <- as.numeric(Metadata$del_cd4)
+Metadata$delivdt <- lubridate::mdy(Metadata$delivdt)
+Metadata <- Metadata |> rename(FourMonthDate=Infant_Collection_Date_4, NineMonthDate=Infant_Collection_Date_9)
+Metadata$FourMonthDate <- lubridate::mdy(Metadata$FourMonthDate)
+Metadata$NineMonthDate <- lubridate::mdy(Metadata$NineMonthDate)
+
+Metadata$bid <- gsub("INF-", "", Metadata$bid)
+Metadata$bid <- sub("^0+", "", Metadata$bid)
+Metadata$bid <- sub("-[0-9]{1}", "", Metadata$bid)
+Metadata$bid <- str_pad(Metadata$bid, 4, pad="0")
+Metadata <- Metadata |> mutate(bid = ifelse(grepl("^[0-9]", bid), paste0("INF", bid), bid))
+Metadata <- Metadata |> unique()
+
+Dataset1$bid <- gsub("INF", "", Dataset1$bid)
+Dataset1$bid <- str_pad(Dataset1$bid, 4, pad="0")
+Dataset1 <- Dataset1 |> mutate(bid = ifelse(grepl("^[0-9]", bid), paste0("INF", bid), bid))
+#Dataset1 |> unique()
+
+Unified <- left_join(Dataset1, Metadata) |> relocate(infant_sex, ptype, screen_vl, del_vl, del_cd4, gestage_d1,
+ delivdt, FourMonthDate, NineMonthDate, .after=Date)
+
+write.csv(Unified, "data/openCytoRatios.csv", row.names=FALSE)
+```

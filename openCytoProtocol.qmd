@@ -10,7 +10,7 @@ Goal is to take the newly copied files from the external hard drive folder, veri
 #| message: FALSE
 #| warning: FALSE
 
-#library(HEULog)
+library(HEULog)
 library(Luciernaga)
 library(dplyr)
 library(purrr)
@@ -55,7 +55,7 @@ CSV <- paste(
 Data <- read.csv(CSV, check.names=FALSE)
 AlreadyVisualized <- Data |> pull(Experiment)
 
-walk(.f=ExperimentVisualized, .x=ExperimentsPresent, visualized=AlreadyVisualized, files=Samples, conditions="Ctrl", template="GatesUnmixed.csv", UnityY="Spark Blue 550-A")
+walk(.f=ExperimentVisualized, .x=ExperimentsPresent, visualized=AlreadyVisualized, files=Samples, conditions=c("SEB", "PPD"), template="GatesUnmixed.csv", UnityY="Spark Blue 550-A", UnityX="Pacific Blue-A")
 ```
 
 ```{r}
