@@ -52,6 +52,8 @@ Table1 <- SelectData |>
   ) %>% modify_header(label ~ "**Demographics**") %>% modify_caption("**Cohort Characteristics**") 
 ```
 
+## {width=45%}
+
 ```{r}
 #| label: tbl-demographics
 #| echo: false
@@ -76,4 +78,36 @@ FinalStorage <- file.path(StorageLocation, "Table1.html")
 gtsave(Bolded, FinalStorage)
 ```
 
+## {width=55%}
+
+```{r}
+#| echo: false
+
+CombinedMetadata <- Metadata |>
+  mutate(ptype_sex = paste(infant_sex, ptype, sep = " + "))
+
+CombinedMetadata$ptype_sex <- factor(CombinedMetadata$ptype_sex, levels=c(
+  "Female + HU", "Male + HU",
+  "Female + HEU-lo", "Male + HEU-lo",
+   "Female + HEU-hi", "Male + HEU-hi"
+))
+
+combined_table <- CombinedMetadata |>
+  select(Condition, timepoint, ptype_sex) |>
+  tbl_strata(
+    strata = Condition,
+    .tbl_fun = 
+      ~ .x |>
+        tbl_summary(
+          by = timepoint,
+          label = list(ptype_sex ~ "Infant Sex and HIV Exposure"),  # Custom label
+          statistic = list(all_categorical() ~ "{n}"),
+          missing = "no"
+        ) |>
+        modify_header(all_stat_cols() ~ "**{level}**<br>N = {n}") |>
+        bold_labels()
+  )
+
+combined_table
+```
 
