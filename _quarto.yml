@@ -1,0 +1,55 @@
+project:
+  type: website
+  output-dir: docs/
+  render: 
+    - index.qmd
+website:
+  google-analytics: 
+    tracking-id: "G-B7X33YDF5P"
+  announcement: 
+    icon: info-circle
+    dismissable: true
+    content: "Welcome to the Alpha Beta Dashboard"
+    type: info
+    position: below-navbar  
+  title: "Alpha Beta T cells"
+  navbar:
+    left:
+    - text: "Home"
+      href: index.qmd
+    - text: "Frequency"
+      menu:
+      - text: "CD4"
+        href: index.qmd
+      - text: "CD8"
+        href: index.qmd
+      - text: "DN"
+        href: index.qmd
+    - text: "Marker Expression"
+      menu:
+      - text: "CD4"
+        href: https://umgccfcss.github.io/Aurora3L/
+      - text: "CD8"
+        href: https://umgccfcss.github.io/Aurora4L/
+      - text: "DN"
+        href: https://umgccfcss.github.io/Aurora5L/
+    right:
+    - text: "Help"
+      href: index.qmd
+    - text: "Download Data"
+      href: index.qmd
+    - text: "Other"
+      menu:
+      - text: "Miscellaneous"
+        href: index.qmd
+    - icon: github
+      href: https://github.com/DavidRach/AlphaBeta
+      aria-label: GitHub
+  page-footer:
+    background: light
+    left: University of Maryland, Baltimore
+    right: Built with [Quarto](https://quarto.org/).
+
+format:
+  html:
+    theme: styles.scss
