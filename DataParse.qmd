@@ -59,8 +59,9 @@ Dataset <- Dataset |> mutate(bid = stringr::str_extract(sample, "(?<=-)[A-Za-z0-
 Dataset <- Dataset |> mutate(pop = stringr::str_extract(pop, "[^/]+$"))
 Dataset <- Dataset |> tidyr::pivot_wider(names_from="pop", values_from="count")
 
-Dataset <- Dataset %>% mutate(across(13:ncol(.), ~ . /lymphocytes)) |> mutate(lymphocytes_count=lymphocytes)
-Dataset <- Dataset %>% mutate(across(10:12, ~ . /CD45)) |> mutate(NotMonocytes = 1 - NotMonocytes) |> mutate(nonDebris = 1 - nonDebris)
+Dataset <- Dataset %>% mutate(across(17:ncol(.), ~ . /Tcells)) |> mutate(Tcells_count=Tcells)
+Dataset <- Dataset %>% mutate(across(13:16, ~ . /lymphocytes)) |> mutate(lymphocytes_count=lymphocytes)
+Dataset <- Dataset %>% mutate(across(10:12, ~ . /CD45)) |> mutate(Monocytes = 1 - NotMonocytes) |> mutate(Debris = 1 - nonDebris) |> mutate(CD45_count=CD45)
 Dataset <- Dataset |> mutate(CD45 = CD45/singletsSSCB)
 Dataset <- Dataset |>  mutate(timepoint = str_extract(sample, "(?<=-)[^-_]+(?=_[^_]*\\.fcs$)"))
 Dataset <- Dataset |> select(-sample) |> relocate(bid, timepoint, Condition, Date, .before="root")
@@ -70,7 +71,13 @@ Dataset <- Dataset |> mutate(bid = case_when(timepoint == "NY068" ~ "NY068", TRU
 ```{r}
 Dataset1 <- Dataset |> dplyr::filter(!bid %in% "NY068")
 
-ReferenceData <- file.path("C:", "Users", "12692", "Documents", "HEUData", "data") #Generalize for different computers
+Linux <- file.path("/home", "david", "Documents")
+Windows <- file.path("C:", "Users", "12692", "Documents")
+OperatingSystem <- Sys.info()["sysname"]
+if(OperatingSystem == "Linux"){OS <- Linux
+} else if (OperatingSystem == "Windows"){OS <- Windows}
+ReferenceData <- file.path(OS, "HEUData", "data")
+
 file <- list.files(ReferenceData, "U01Metadata2025.csv", full.names=TRUE)
 Metadata <- read.csv(file, check.names=FALSE) |> select(bid, infant_sex, ptype, screen_vl, del_vl, del_cd4, gestage_d1,
  delivdt, Infant_Collection_Date_4, Infant_Collection_Date_9)

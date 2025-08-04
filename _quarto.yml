@@ -3,6 +3,7 @@ project:
   output-dir: docs/
   render: 
     - index.qmd
+    - AB_*
 website:
   google-analytics: 
     tracking-id: "G-B7X33YDF5P"
@@ -20,19 +21,27 @@ website:
     - text: "Frequency"
       menu:
       - text: "CD4"
-        href: index.qmd
+        href: AB_CD4.qmd
       - text: "CD8"
-        href: index.qmd
+        href: AB_CD8.qmd
       - text: "DN"
-        href: index.qmd
-    - text: "Marker Expression"
+        href: AB_DN.qmd
+      - text: "Vd2"
+        href: AB_Vd2.qmd
+      - text: "Va7.2"
+        href: AB_Va7.qmd
+      - text: "T cells"
+        href: AB_Tcells.qmd
+      - text: "B cells"
+        href: AB_Bcells.qmd
+      - text: "Monocytes"
+        href: AB_Monocytes.qmd
+    - text: "Counts"
       menu:
-      - text: "CD4"
-        href: https://umgccfcss.github.io/Aurora3L/
-      - text: "CD8"
-        href: https://umgccfcss.github.io/Aurora4L/
-      - text: "DN"
-        href: https://umgccfcss.github.io/Aurora5L/
+      - text: "CD45"
+        href: AB_CD45Count.qmd
+      - text: "T cells"
+        href: AB_TcellsCount.qmd
     right:
     - text: "Help"
       href: index.qmd
