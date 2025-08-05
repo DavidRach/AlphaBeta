@@ -55,7 +55,7 @@ CSV <- paste(
 Data <- read.csv(CSV, check.names=FALSE)
 AlreadyVisualized <- Data |> pull(Experiment)
 
-walk(.f=ExperimentVisualized, .x=ExperimentsPresent[[1]], visualized=AlreadyVisualized, files=Samples, conditions=c("Ctrl"), template="GatesUnmixed.csv", UnityY="Spark Blue 550-A", UnityX="Pacific Blue-A",
+walk(.f=ExperimentVisualized, .x=ExperimentsPresent, visualized=AlreadyVisualized, files=Samples, conditions=c("Ctrl", "SEB"), template="GatesUnmixed.csv", UnityY="Spark Blue 550-A", UnityX="Pacific Blue-A",
 GatePlots=FALSE, RidgePlots=FALSE, UnityPlots=FALSE, OneByNPlots=TRUE)
 ```
 
