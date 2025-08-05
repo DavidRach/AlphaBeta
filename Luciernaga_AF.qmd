@@ -90,6 +90,7 @@ AFOverlap_CSV
 
 
 ```{r}
+#| eval: FALSE
 removestrings <- ".fcs"
 
 outpath <- file.path("/home", "david", "Desktop", "WinterAFs")
@@ -110,6 +111,34 @@ UnstainedSignature <- Luciernaga_QC(x=MyGatingSet[1],
                                     outpath = outpath,
                                     Increments=0.1, experiment="Test",
                                     condition="test")
+
+#View(UnstainedSignature)
+#colnames(UnstainedSignature)
+```
+
+```{r}
+removestrings <- ".fcs"
+
+outpath <- file.path("/home", "david", "Desktop", "WinterAFs", "Jul30")
+
+
+UnstainedSignature <- Luciernaga_QC(x=MyGatingSet[1],
+                                    subsets="monocytes", 
+                                    removestrings=removestrings,
+                                    sample.name="GUID",
+                                    unmixingcontroltype = "cells",
+                                    Unstained = TRUE, 
+                                    ratiopopcutoff = 0.01,
+                                    Verbose = TRUE,
+                                    AFOverlap = AFOverlap,
+                                    stats = "median",
+                                    ExportType = "fcs",
+                                    SignatureReturnNow = FALSE,
+                                    outpath = outpath,
+                                    Increments=0.1, experiment="Test",
+                                    condition="test", 
+                                    minimalfcscutoff = 0.01, 
+                                    NegativeType="artificial")
 
 #View(UnstainedSignature)
 #colnames(UnstainedSignature)
