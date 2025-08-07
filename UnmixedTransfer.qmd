@@ -8,6 +8,7 @@ format: html
 #| warning: false
 library(dplyr)
 library(purrr)
+library(HEULog)
 ```
 
 We first navigate to our experiment folder and check for AlphaBeta experiments currently present
@@ -56,6 +57,8 @@ Let's create some processing functions:
 
 
 ```{r}
+#| eval: FALSE
+
 #' Checks whether the folder has been transferred yet, and does so if not the case
 #' 
 #' @param x The folder being checked against the parsed names
@@ -178,8 +181,14 @@ AlreadyProcessed <- Data |> pull(Experiment)
 
 TheseFolders <- basename(Experiments)
 
-UpdatedData <- purrr::map(.x=TheseFolders, .f=ExperimentParsed, parsed=AlreadyProcessed, parentFolder=OS) |> bind_rows()
-NewlyProcessed <- bind_rows(Data, UpdatedData)
-write.csv(NewlyProcessed, "data/ProcessedExperiments.csv", row.names=FALSE)
+UpdatedData <- purrr::map(.x=TheseFolders, .f=ExperimentParsed, parsed=AlreadyProcessed, parentFolder=OS)
+
+
+
+#flatten(UpdatedData) # Need to edit to extract from list to allow for updating
+#unlist(purrr::flatten(UpdatedData))
+
+#NewlyProcessed <- bind_rows(Data, UpdatedData)
+#write.csv(NewlyProcessed, "data/ProcessedExperiments.csv", row.names=FALSE)
 ```
 
