@@ -8,6 +8,7 @@ library(dplyr)
 library(purrr)
 library(tidyr)
 library(stringr)
+#library(HEULog)
 ```
 
 ```{r}
@@ -15,7 +16,7 @@ Folders <- list.files("LabNotebook", pattern="2025-", include.dirs=TRUE, full.na
 ```
 
 ```{r}
-#| eval: false
+#| eval: TRUE
 
 #' Parses out the current data folders for data .csv files
 #' 
