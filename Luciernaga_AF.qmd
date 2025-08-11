@@ -14,6 +14,7 @@ library(openCyto)
 library(stringr)
 library(data.table)
 library(Luciernaga)
+library(dplyr)
 ```
 
 ```{r}
@@ -50,15 +51,14 @@ CSV <- paste(
       "main", "data", "VisualizedExperiments_AF.csv",                              
       sep = "/") 
 
+CSV <- "data/VisualizedExperiments_AF.csv"
+
 Data <- read.csv(CSV, check.names=FALSE)
 AlreadyVisualized <- Data |> pull(Experiment)
 
 #walk(.f=ExperimentVisualized, .x=ExperimentsPresent, visualized=AlreadyVisualized, files=Samples, conditions=c("Ctrl", "PPD", "SEB"), template="GatesUnmixed.csv", UnityY="Spark Blue 550-A", UnityX="Pacific Blue-A")
 ```
 
-```{r}
-print("Goodbye")
-```
 
 # Find our File
 ```{r}
