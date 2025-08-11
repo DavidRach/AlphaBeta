@@ -57,83 +57,84 @@ Data <- read.csv(CSV, check.names=FALSE)
 AlreadyVisualized <- Data |> pull(Experiment)
 
 #walk(.f=ExperimentVisualized, .x=ExperimentsPresent, visualized=AlreadyVisualized, files=Samples, conditions=c("Ctrl", "PPD", "SEB"), template="GatesUnmixed.csv", UnityY="Spark Blue 550-A", UnityX="Pacific Blue-A")
+
+
 ```
 
-
-# Find our File
-```{r}
-Location <- "/media/david/DavidRach/U01_Myeloid"
-Folders <- list.files(Location)
-Folders
-
-thenumber <- 3 # Change The Number for the new experiment location in Folders
-```
+# Processing
 
 ```{r}
-x <- Folders[thenumber]
-thex <- as.character(x)
-path <- file.path(Location, x)
+x=ExperimentsPresent[1]
+visualized=AlreadyVisualized
+files=Samples
+template <- "GatesRaw.csv"
+experimentdesignation <- "AB"
+GatePlots=TRUE
+
+AutofluoresceShop <- function(x, visualized, files, experimentdesignation="AB",
+template, GatePlots=TRUE){
+
+  Status <- x %in% visualized
+  ExperimentName <- x
+  if (Status == TRUE){return(Status)}
+
+  internalfiles <- files[grep(ExperimentName, files)]
+
+  # experimentdesignation <- "AB"
+  Experiment <- sub(paste0("_", experimentdesignation, ".*"), "", ExperimentName)
+  Experiment <- gsub("_", "-", Experiment)
+
+  LabFiles <- list.files("LabNotebook", include.dirs=TRUE)
+  if (!Experiment %in% LabFiles)(stop("LabNotebook for ", Experiment, " is not present"))
+  
+  Notebook <- file.path("LabNotebook", Experiment)
+  NotebookFiles <- list.files(Notebook, include.dirs=TRUE)
+
+  if (!"Autofluorescence" %in% NotebookFiles){
+      Autofluorescence <- file.path(Notebook, "Autofluorescence")
+      dir.create(Autofluorescence)
+  } else {Autofluorescence <- file.path(Notebook, "Autofluorescence")}
+
+  MyCytoSet <- load_cytoset_from_fcs(internalfiles,
+   truncate_max_range = FALSE, transform = FALSE)
+  MyGatingSet <- GatingSet(MyCytoSet)
+
+  RawGates <- data.table::fread(template)
+  RawGating <- gatingTemplate(RawGates)
+  gt_gating(RawGating, MyGatingSet)
+
+  if (GatePlots == TRUE){
+  Plots <- purrr::map(.x=MyGatingSet, .f=Utility_GatingPlots,
+   sample.name=c("GROUPNAME", "TUBENAME"),
+   removestrings=c("Unmixed", "(", ")", ".fcs"),
+   gtFile=RawGates, 
+   outpath=NULL,
+   returnType="patchwork",
+   plotname=TRUE)
+
+  fileName <- ExperimentName
+  fileName <- paste(fileName, "AutofluorescenceGating", sep="_")
+
+  Utility_Patchwork(x=Plots, filename=fileName, outfolder=Autofluorescence,
+  thecolumns = 1, therows=1, returntype="pdf", NotListofList = FALSE,
+  patches=TRUE)
+  }
+
+  FileLocation <- system.file("extdata", package = "Luciernaga")
+  pattern = "AutofluorescentOverlaps.csv"
+  AFOverlap <- list.files(path=FileLocation, pattern=pattern,
+                          full.names = TRUE)
+
+  
 
 
-#TheUnstaineds <- list.files(path=path, pattern="^Unstained", full.names=TRUE)
-#TheUnstaineds <- list.files(path=path, pattern="CD107a", full.names=TRUE)
-TheUnstaineds <- list.files(path=path, pattern=".fcs", full.names=TRUE)
 
-if (length(TheUnstaineds) == 1){file <- TheUnstaineds} else {message("Multiple items are present!!!!")}
 
+
+}
 ```
 
-# Load the File into a Flow Format
-```{r}
-MyCytoSet <- load_cytoset_from_fcs(TheUnstaineds, truncate_max_range = FALSE, transform = FALSE)
-MyGatingSet <- GatingSet(MyCytoSet)
-```
 
-# Applied Gates
-```{r}
-FileLocation <- system.file("extdata", package = "Luciernaga")
-MyGates <- fread(file.path(path = FileLocation, pattern = 'Gates.csv'))
-MyGates <- MyGates
-MyGates[5,1] <- "monocytes"
-MyGates[5,4] <- "SSC-A"
-MyGates[5,5] <- "gate_mindensity"
-MyGates[4,6] <- "gate_range=c(0.9e6, 1.1e6)"
-MyGates[5,6] <- "gate_range=c(1.25e6, 2e6)"
-```
-
-```{r}
-MyGatingTemplate <- gatingTemplate(MyGates)
-gt_gating(MyGatingTemplate, MyGatingSet)
-plot(MyGatingSet)
-```
-
-# Validated the Gating
-```{r}
-removestrings <-  c("(Cells)", ".fcs", " ")
-StorageLocation <- path
-
-thefirstfilename <- paste0(thex, "_Unstained_", thenumber)
-
-IndividualPlot <- Utility_GatingPlots(x=MyGatingSet[[1]], sample.name = "GUID",
-                                      removestrings = removestrings, gtFile = MyGates,
-                                      DesiredGates = NULL, outpath = StorageLocation,
-                                      filename = thefirstfilename, returnType="pdf")
-
-IndividualPlot[1]
-#pData(MyGatingSet)
-```
-
-
-# Extracting Autofluorescence
-
-```{r}
-FileLocation <- system.file("extdata", package = "Luciernaga")
-pattern = "AutofluorescentOverlaps.csv"
-AFOverlap <- list.files(path=FileLocation, pattern=pattern,
-                        full.names = TRUE)
-AFOverlap_CSV <- read.csv(AFOverlap, check.names = FALSE)
-AFOverlap_CSV
-```
 
 ```{r}
 removestrings <- ".fcs"
