@@ -54,119 +54,6 @@ if (length(CSVFiles) == 0){
 }
 ```
 
-Let's create some processing functions:
-
-
-```{r}
-#| eval: FALSE
-
-#' Checks whether the folder has been transferred yet, and does so if not the case
-#' 
-#' @param x The folder being checked against the parsed names
-#' @param parsed Retrieved processed experiment names
-#' @param parentFolder Path to the Users Folder containing the Experiments
-#' @param Experiment Folder name on the target External Hard Drive
-#' @param Type Accepts "Raw" or "Unmixed"
-#' @param Samples Accepts "samples", "unstained", "singlecolors"
-#' 
-#' @export
-ExperimentParsed <- function(x, parsed, parentFolder, Experiment="AlphaBeta",
- Type="Unmixed", Samples="samples"){
-    Status <- x %in% parsed
-    ExperimentName <- x
-    if (Status == TRUE){return(Status)}
-
-    TargetFolder <- ExternalDriveLocate(Experiment=Experiment)
-    OriginPath <- file.path(parentFolder, x)
-
-    OriginFolders <- list.files(OriginPath)
-    if (!Type %in% OriginFolders) {stop("Unmixed or Raw Folders not found in the origin folder")}
-
-    OriginTarget <- file.path(OriginPath, Type)
-    Groups <- list.files(OriginTarget)
-
-    if (Samples=="samples"){
-        Groups <- Groups[Groups != "Reference Group"]
-    } else if (Samples == "singlecolors"){
-        Groups <- Groups[Groups == "Reference Group"]
-    } else if (Samples == "unstained"){
-        Groups <- Groups # Need to selectively target Unstained here though
-    } else {message("Only Ja knows")}
-
-    # x <- Groups[1]
-    purrr::walk(.x=Groups, .f=GroupTarget, ExperimentName=ExperimentName,
-    OriginTarget=OriginTarget, TargetFolder=TargetFolder)
-
-    TodaysDate <- Sys.Date()
-    TodayData <- data.frame(Experiment=x, Date=TodaysDate)
-    return(TodayData)
-}
-
-#' Working within an experiment, for designated group, transfers and renames individual specimens
-#' 
-#' @noRd
-#' 
-GroupTarget <- function(x, ExperimentName, OriginTarget, TargetFolder){
-    Specimens <- file.path(OriginTarget, x)
-    SpecimenList <- list.files(Specimens)
-    GroupName <- x
-    purrr::walk(.x=SpecimenList, .f=SpecimenTarget, ExperimentName=ExperimentName,
-    GroupName=GroupName, OriginTarget=OriginTarget, TargetFolder=TargetFolder)
-}
-
-#' Working within an experiment, for designated group, transfers and renames individual specimens
-#' 
-#' @noRd
-SpecimenTarget <- function(x, ExperimentName, GroupName, OriginTarget, TargetFolder){
-    ConditionName <- x
-
-    FilePath <- file.path(OriginTarget, GroupName, ConditionName)
-    if (!file.exists(FilePath)) {stop("File not found: ", FilePath)}
-
-    FCSFileName <- paste(ExperimentName, GroupName, ConditionName, sep="-")
-    OutwardName <- file.path(TargetFolder, FCSFileName)
-
-    file.copy(from=FilePath, to=OutwardName)
-}
-
-#' Checks for the presence of an external hard drive and designated root folder
-#' 
-#' @param Experiment Name of the folder in the external hard drives root
-#' 
-#' @return The file path to the Experiment Folder, or a stop message indicating couldn't locate the external drive
-#' 
-#' @export
-#' 
-#' @examples ExternalDriveLocate()
-#'
-ExternalDriveLocate <- function(Experiment){
-    OperatingSystem <- Sys.info()["sysname"]
-
-    if (OperatingSystem == "Windows"){
-    drives <- system("wmic logicaldisk get name", intern = TRUE)
-    drives <- drives[drives != ""][-1] 
-    drives <- gsub("\\s+", "", drives)
-    drives <- drives[drives != "C:"]
-    External <- drives[drives != ""]
-
-    if (length(External) == 0){stop("No External Drives detected, plug it in!")
-    } else if (length(External) == 1) {
-        ExternalFiles <- list.files(External, include.dirs=TRUE)
-        if (!Experiment %in% ExternalFiles)(stop("Specified Experiment folder not present!"))
-        Location <- file.path(External, Experiment)
-    } else if (length(External > 1)) {
-        stop("More than one external drive detected, searching")
-    } else {stop("This shouldn't have happened")}
-
-    } else if (OperatingSystem == "Linux"){
-      stop("Code the part to detect media drives!")
-    } else {stop("BSD and Mac not yet coded, sorry")}
-
-    return(Location)
-}
-```
-
-
 We then call to GitHub to check to see if any of these haven't been processed yet. 
 
 ```{r}
@@ -183,7 +70,7 @@ AlreadyProcessed <- Data |> pull(Experiment)
 
 TheseFolders <- basename(Experiments)
 
-UpdatedData <- purrr::map(.x=TheseFolders, .f=ExperimentParsed, parsed=AlreadyProcessed, parentFolder=OS)
+UpdatedData <- purrr::map(.x=TheseFolders, .f=ExperimentParsed, parsed=AlreadyProcessed, parentFolder=OS, Type="Raw", Samples="unstained")
 
 UpdatedData <- UpdatedData[sapply(UpdatedData, is.data.frame)]
 
@@ -194,7 +81,7 @@ str(Data)
 #unlist(purrr::flatten(UpdatedData))
 
 NewlyProcessed <- bind_rows(Data, UpdatedData)
-write.csv(NewlyProcessed, "data/ProcessedExperiments.csv", row.names=FALSE)
+write.csv(NewlyProcessed, "data/ProcessedExperiments_AF.csv", row.names=FALSE)
 ```
 
 ```{r}
