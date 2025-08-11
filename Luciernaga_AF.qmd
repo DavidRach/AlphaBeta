@@ -18,9 +18,12 @@ library(stringr)
 ```{r}
 Location <- "/media/david/DavidRach/U01_Myeloid"
 Folders <- list.files(Location)
+Folders
 
-thenumber <- 4
+thenumber <- 3 # Change The Number for the new experiment location in Folders
+```
 
+```{r}
 x <- Folders[thenumber]
 thex <- as.character(x)
 path <- file.path(Location, x)
@@ -30,9 +33,8 @@ path <- file.path(Location, x)
 #TheUnstaineds <- list.files(path=path, pattern="CD107a", full.names=TRUE)
 TheUnstaineds <- list.files(path=path, pattern=".fcs", full.names=TRUE)
 
-if (length(TheUnstaineds) == 1){
-  file <- TheUnstaineds
-} else {message("Multiple items are present!!!!")}
+if (length(TheUnstaineds) == 1){file <- TheUnstaineds} else {message("Multiple items are present!!!!")}
+
 ```
 
 # Load the File into a Flow Format
@@ -41,9 +43,7 @@ MyCytoSet <- load_cytoset_from_fcs(TheUnstaineds, truncate_max_range = FALSE, tr
 MyGatingSet <- GatingSet(MyCytoSet)
 ```
 
-
 # Applied Gates
-
 ```{r}
 FileLocation <- system.file("extdata", package = "Luciernaga")
 MyGates <- fread(file.path(path = FileLocation, pattern = 'Gates.csv'))
@@ -51,6 +51,7 @@ MyGates <- MyGates
 MyGates[5,1] <- "monocytes"
 MyGates[5,4] <- "SSC-A"
 MyGates[5,5] <- "gate_mindensity"
+MyGates[4,6] <- "gate_range=c(0.9e6, 1.1e6)"
 MyGates[5,6] <- "gate_range=c(1.25e6, 2e6)"
 ```
 
@@ -63,7 +64,7 @@ plot(MyGatingSet)
 # Validated the Gating
 ```{r}
 removestrings <-  c("(Cells)", ".fcs", " ")
-StorageLocation <- file.path("/home", "david", "Desktop")
+StorageLocation <- path
 
 thefirstfilename <- paste0(thex, "_Unstained_", thenumber)
 
@@ -88,15 +89,39 @@ AFOverlap_CSV <- read.csv(AFOverlap, check.names = FALSE)
 AFOverlap_CSV
 ```
 
-
 ```{r}
-#| eval: FALSE
 removestrings <- ".fcs"
 
-outpath <- file.path("/home", "david", "Desktop", "WinterAFs")
+outpath <- path
 
+TargetFolder <- file.path(outpath, "LuciernagaOutputs")
+
+if (!dir.exists(TargetFolder)){dir.create(TargetFolder)}
 
 UnstainedSignature <- Luciernaga_QC(x=MyGatingSet[1],
+                                    subsets="monocytes", 
+                                    removestrings=removestrings,
+                                    sample.name="GUID",
+                                    unmixingcontroltype = "cells",
+                                    Unstained = TRUE, 
+                                    ratiopopcutoff = 0.01,
+                                    Verbose = TRUE,
+                                    AFOverlap = AFOverlap,
+                                    stats = "median",
+                                    ExportType = "fcs",
+                                    SignatureReturnNow = FALSE,
+                                    outpath = TargetFolder,
+                                    Increments=0.1, experiment="Test",
+                                    condition="test", 
+                                    minimalfcscutoff = 0.01, 
+                                    NegativeType="artificial")
+
+#View(UnstainedSignature)
+#colnames(UnstainedSignature)
+```
+
+```{r}
+UnstainedSignature_Data <- Luciernaga_QC(x=MyGatingSet[1],
                                     subsets="monocytes", 
                                     removestrings=removestrings,
                                     sample.name="GUID",
@@ -117,36 +142,11 @@ UnstainedSignature <- Luciernaga_QC(x=MyGatingSet[1],
 ```
 
 ```{r}
-removestrings <- ".fcs"
-
-outpath <- file.path("/home", "david", "Desktop", "WinterAFs", "Jul30")
-
-
-UnstainedSignature <- Luciernaga_QC(x=MyGatingSet[1],
-                                    subsets="monocytes", 
-                                    removestrings=removestrings,
-                                    sample.name="GUID",
-                                    unmixingcontroltype = "cells",
-                                    Unstained = TRUE, 
-                                    ratiopopcutoff = 0.01,
-                                    Verbose = TRUE,
-                                    AFOverlap = AFOverlap,
-                                    stats = "median",
-                                    ExportType = "fcs",
-                                    SignatureReturnNow = FALSE,
-                                    outpath = outpath,
-                                    Increments=0.1, experiment="Test",
-                                    condition="test", 
-                                    minimalfcscutoff = 0.01, 
-                                    NegativeType="artificial")
-
-#View(UnstainedSignature)
-#colnames(UnstainedSignature)
-```
-
-```{r}
 library(dplyr)
-Clusters <- sub("_.*", "", UnstainedSignature$Cluster)
+
+DecisionData <- UnstainedSignature_Data |> mutate(MainDetector = gsub("_.*", "", UnstainedSignature_Data$Cluster)) |> group_by(MainDetector) |> slice_head(n = 3) |> ungroup()
+
+Clusters <- sub("_.*", "", DecisionData$Cluster)
 
 ClustersData <- data.frame(table(Clusters)) |> arrange(desc(Freq)) |> pull(Clusters)
 ```
@@ -156,15 +156,15 @@ ClustersData <- data.frame(table(Clusters)) |> arrange(desc(Freq)) |> pull(Clust
 #' @importFrom dplyr select filter pull
 #' @importFrom stringr str_detect
 #' @importFrom plotly ggplotly
-SignatureVariants <- function(x, data, returnType){
+SignatureVariants <- function(x, data, returnType, legend){
   x <- as.character(x)
 
   UnstainedSignature1 <- data |>
      dplyr::select(-Sample, -Experiment, -Condition, -Count)
 
-  These <- UnstainedSignature1  |> dplyr::filter(str_detect(Cluster, paste0("^", x))) |> dplyr::pull(Cluster) |> unique()
+  These <- UnstainedSignature1  |> dplyr::filter(stringr::str_detect(Cluster, paste0("^", x))) |> dplyr::pull(Cluster) |> unique()
 
-  Plots <- Luciernaga::QC_ViewSignature(x=These, columnname="Cluster", data=UnstainedSignature1, Normalize=TRUE,TheFormat="wider", legend=FALSE)
+  Plots <- Luciernaga::QC_ViewSignature(x=These, columnname="Cluster", data=UnstainedSignature1, Normalize=TRUE,TheFormat="wider", legend=legend)
 
   if (returnType == "plots"){
     return(Plots)
@@ -176,14 +176,14 @@ SignatureVariants <- function(x, data, returnType){
 ```
 
 ```{r}
-Plots <- purrr::map(.x=ClustersData, .f=SignatureVariants, data=UnstainedSignature, returnType="plots")
-
-StorageLocation
+Plots <- purrr::map(.x=ClustersData, .f=SignatureVariants, data=DecisionData, returnType="plots", legend=TRUE)
 
 thefilename <- paste0("Signatures_", thenumber)
 
-Utility_Patchwork(x=Plots, filename=thefilename, outfolder=StorageLocation)
+Utility_Patchwork(x=Plots, filename=thefilename, outfolder=TargetFolder, therows=3, thecolumns=1)
 ```
+
+
 ```{r}
 print("Go!")
 ```
