@@ -177,18 +177,26 @@ CSV <- paste(
     ) 
 
 Data <- read.csv(CSV, check.names=FALSE)
+Data$Date <- lubridate::mdy(Data$Date)
 AlreadyProcessed <- Data |> pull(Experiment)
 
 TheseFolders <- basename(Experiments)
 
 UpdatedData <- purrr::map(.x=TheseFolders, .f=ExperimentParsed, parsed=AlreadyProcessed, parentFolder=OS)
 
+UpdatedData <- UpdatedData[sapply(UpdatedData, is.data.frame)]
 
+UpdatedData <- bind_rows(UpdatedData)
+str(Data)
 
 #flatten(UpdatedData) # Need to edit to extract from list to allow for updating
 #unlist(purrr::flatten(UpdatedData))
 
-#NewlyProcessed <- bind_rows(Data, UpdatedData)
-#write.csv(NewlyProcessed, "data/ProcessedExperiments.csv", row.names=FALSE)
+NewlyProcessed <- bind_rows(Data, UpdatedData)
+write.csv(NewlyProcessed, "data/ProcessedExperiments.csv", row.names=FALSE)
+```
+
+```{r}
+print("Go!")
 ```
 
