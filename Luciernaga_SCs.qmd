@@ -1,5 +1,5 @@
 ---
-title: "Luciernaga Autofluorescence"
+title: "Luciernaga Single Colors"
 format: html
 ---
 
@@ -19,9 +19,9 @@ library(dplyr)
 
 ```{r}
 Location <- HEULog::ExternalDriveLocate(Experiment="AlphaBeta")
-Location <- file.path(Location, "Autofluorescence")
+Location <- file.path(Location, "SingleColors")
 FCSFiles <- list.files(Location, pattern=".fcs", full.names=TRUE, recursive=FALSE)
-Samples <- FCSFiles[!stringr::str_detect(FCSFiles, "Reference")]
+Samples <- FCSFiles[stringr::str_detect(FCSFiles, "Reference")]
 ```
 
 ```{r}
@@ -34,11 +34,11 @@ ExperimentsPresent <- sub("-.*", "", basename(Samples)) |> unique()
 # Setup for data folder and ProcessedExperiments.csv
 IsDataPresent <- list.files(include.dirs=TRUE)
 if (!any(IsDataPresent %in% "data")){dir.create("data")}
-CSVFiles <- list.files("data", pattern="VisualizedExperiments_AF.csv")
+CSVFiles <- list.files("data", pattern="VisualizedExperiments_SCs.csv")
 
 if (length(CSVFiles) == 0){
     ProcessedExperiments <- data.frame(Experiment="Test", Date="2000-01-01")
-    filename <- "VisualizedExperiments_AF.csv"
+    filename <- "VisualizedExperiments_SCs.csv"
     StorageLocation <- file.path("data", filename)
     write.csv(ProcessedExperiments, StorageLocation, row.names=FALSE)
 }
@@ -48,10 +48,10 @@ if (length(CSVFiles) == 0){
 CSV <- paste(                                                
       "https://raw.githubusercontent.com",                  
       "DavidRach", "AlphaBeta",                   
-      "main", "data", "VisualizedExperiments_AF.csv",                              
+      "main", "data", "VisualizedExperiments_SCs.csv",                              
       sep = "/") 
 
-CSV <- "data/VisualizedExperiments_AF.csv"
+CSV <- "data/VisualizedExperiments_SCs.csv"
 
 Data <- read.csv(CSV, check.names=FALSE)
 AlreadyVisualized <- Data |> pull(Experiment)
@@ -60,19 +60,4 @@ AlreadyVisualized <- Data |> pull(Experiment)
 ```
 
 # Processing
-
-```{r}
-purrr::walk(.x=ExperimentsPresent, .f=AutofluoresceShop, 
-visualized=AlreadyVisualized, files=Samples, template="GatesRaw.csv")
-```
-
-```{r}
-Location <- file.path("LabNotebook")
-Files <- list.files(Location, pattern="AFData.csv", full.names=TRUE, recursive=TRUE)
-Files
-
-Dataset <- purrr::map(.x=Files, .f=read.csv, check.names=FALSE) |> dplyr::bind_rows()
-#nrow(Dataset)
-#sub("_.*", "", Dataset$Cluster) |> unique()
-```
 

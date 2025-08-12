@@ -1,5 +1,5 @@
 ---
-title: "Raw Autofluorescence Transfer"
+title: "Raw Single Colors Transfer"
 format: html
 ---
 
@@ -43,11 +43,11 @@ Experiments <- list.files(OS, pattern="AB_", full.names=TRUE)
 # Setup for data folder and ProcessedExperiments.csv
 IsDataPresent <- list.files(include.dirs=TRUE)
 if (!any(IsDataPresent %in% "data")){dir.create("data")}
-CSVFiles <- list.files("data", pattern="ProcessedExperiments_AF.csv")
+CSVFiles <- list.files("data", pattern="ProcessedExperiments_SCs.csv")
 
 if (length(CSVFiles) == 0){
     ProcessedExperiments <- data.frame(Experiment="Test", Date="01-01-2000")
-    filename <- "ProcessedExperiments_AF.csv"
+    filename <- "ProcessedExperiments_SCs.csv"
     StorageLocation <- file.path("data", filename)
     write.csv(ProcessedExperiments, StorageLocation, row.names=FALSE)
 }
@@ -59,7 +59,7 @@ We then call to GitHub to check to see if any of these haven't been processed ye
 CSV <- paste(                                                
       "https://raw.githubusercontent.com",                  
       "DavidRach", "AlphaBeta",                   
-      "main", "data", "ProcessedExperiments_AF.csv",                              
+      "main", "data", "ProcessedExperiments_SCs.csv",                              
       sep = "/"                                             
     ) 
 
@@ -68,7 +68,13 @@ Data$Date <- lubridate::mdy(Data$Date)
 AlreadyProcessed <- Data |> pull(Experiment)
 
 TheseFolders <- basename(Experiments)
+```
 
+
+# And this is the portion that remains to be expanded on
+
+```{r}
+#| eval: FALSE
 UpdatedData <- purrr::map(.x=TheseFolders, .f=ExperimentParsed, parsed=AlreadyProcessed, parentFolder=OS, Type="Raw", Samples="unstained")
 
 UpdatedData <- UpdatedData[sapply(UpdatedData, is.data.frame)]
@@ -86,6 +92,3 @@ write.csv(NewlyProcessed, "data/ProcessedExperiments_AF.csv", row.names=FALSE)
 ```{r}
 print("Go!")
 ```
-
-
-
