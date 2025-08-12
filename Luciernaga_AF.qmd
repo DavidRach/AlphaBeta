@@ -66,3 +66,13 @@ purrr::walk(.x=ExperimentsPresent, .f=AutofluoresceShop,
 visualized=AlreadyVisualized, files=Samples, template="GatesRaw.csv")
 ```
 
+```{r}
+Location <- file.path("LabNotebook")
+Files <- list.files(Location, pattern="AFData.csv", full.names=TRUE, recursive=TRUE)
+Files
+
+Dataset <- purrr::map(.x=Files, .f=read.csv, check.names=FALSE) |> dplyr::bind_rows()
+#nrow(Dataset)
+#sub("_.*", "", Dataset$Cluster) |> unique()
+```
+
