@@ -66,13 +66,15 @@ AlreadyVisualized <- Data |> pull(Experiment)
 ```{r}
 x=ExperimentsPresent[1]
 visualized=AlreadyVisualized
-files=Samples
+files=Samples[1]
 template <- "GatesRaw.csv"
 experimentdesignation <- "AB"
 GatePlots=TRUE
+TheN <- 3
+Display <- "selection"
 
 AutofluoresceShop <- function(x, visualized, files, experimentdesignation="AB",
-template, GatePlots=TRUE){
+template, GatePlots=TRUE, TheN=3, Display="selection"){
 
   Status <- x %in% visualized
   ExperimentName <- x
@@ -125,85 +127,89 @@ template, GatePlots=TRUE){
   AFOverlap <- list.files(path=FileLocation, pattern=pattern,
                           full.names = TRUE)
 
-  
+  Tags <- file.path(Autofluorescence, "Tags")
+  if (!dir.exists(Tags)){dir.create(Tags)}
 
+  LuciernagaTemp <- file_temp("Luciernaga_Temp_")
+  dir.create(LuciernagaTemp)
+  #dir.exists(LuciernagaTemp)
+  dir_ls(LuciernagaTemp, glob = "*.fcs")
 
+  ReturnedFCS <- purrr::map(.x=MyGatingSet[1], .f=Luciernaga_QC, subsets="lymphocytes", removestrings=".fcs", 
+  sample.name=c("GROUPNAME", "TUBENAME"), unmixingcontroltype = "cells",
+  Unstained = TRUE, ratiopopcutoff = 0.01, Verbose = FALSE,
+  AFOverlap = AFOverlap, stats = "median", ExportType = "fcs",
+  SignatureReturnNow = FALSE, outpath = LuciernagaTemp, Increments=0.1, experiment=ExperimentName, condition="NA", minimalfcscutoff = 0.01, 
+  NegativeType="artificial")
 
+  # x <- MyGatingSet[1]
+  ReturnedOutputs <- map(.x=MyGatingSet, .f=LuciernagaLocal,
+   outpath=Tags, TheN=TheN, Display=Display,
+   ExperimentName=ExperimentName)
 
+  thefilename <- paste0("Signatures_", thenumber)
 
+  Utility_Patchwork(x=Plots, filename=thefilename,
+  outfolder=TargetFolder, therows=3, thecolumns=1)
 }
-```
 
+LuciernagaLocal <- function(x, outpath, TheN, Display, ExperimentName){
+  LuciernagaTemp <- file_temp("Luciernaga_Temp_")
+  dir.create(LuciernagaTemp)
+  # dir.exists(LuciernagaTemp)
+  TheTempFiles <- dir_ls(LuciernagaTemp, glob = "*.fcs")
 
+  first <- keyword(x, "GROUPNAME")
+  second <- keyword(x, "TUBENAME")
+  LocalPlotName <- paste(first, second, sep="_")
 
-```{r}
-removestrings <- ".fcs"
+  ReturnedFCS <- purrr::map(.x=x, .f=Luciernaga_QC, subsets="lymphocytes",
+  removestrings=".fcs", 
+  sample.name=c("GROUPNAME", "TUBENAME"), unmixingcontroltype = "cells",
+  Unstained = TRUE, ratiopopcutoff = 0.01, Verbose = FALSE,
+  AFOverlap = AFOverlap, stats = "median", ExportType = "fcs",
+  SignatureReturnNow = FALSE, outpath = LuciernagaTemp, Increments=0.1, experiment=ExperimentName, condition="NA", minimalfcscutoff = 0.001, 
+  NegativeType="artificial")
 
-outpath <- path
+  ReturnedFCS <- ReturnedFCS[[1]]
 
-TargetFolder <- file.path(outpath, "LuciernagaOutputs")
+  DecisionData <- ReturnedFCS |>
+     mutate(MainDetector = gsub("_.*", "", .data[["Cluster"]])) |>
+     group_by(MainDetector) |> slice_head(n = TheN) |> ungroup()
 
-if (!dir.exists(TargetFolder)){dir.create(TargetFolder)}
+  Clusters <- sub("_.*", "", DecisionData$Cluster)
+  ClustersData <- data.frame(table(Clusters)) |> arrange(desc(Freq)) |> pull(Clusters)
 
-UnstainedSignature <- Luciernaga_QC(x=MyGatingSet[1],
-                                    subsets="monocytes", 
-                                    removestrings=removestrings,
-                                    sample.name="GUID",
-                                    unmixingcontroltype = "cells",
-                                    Unstained = TRUE, 
-                                    ratiopopcutoff = 0.01,
-                                    Verbose = TRUE,
-                                    AFOverlap = AFOverlap,
-                                    stats = "median",
-                                    ExportType = "fcs",
-                                    SignatureReturnNow = FALSE,
-                                    outpath = TargetFolder,
-                                    Increments=0.1, experiment="Test",
-                                    condition="test", 
-                                    minimalfcscutoff = 0.01, 
-                                    NegativeType="artificial")
+  TheseSpecimens <- DecisionData |> mutate(Cluster = gsub("_", "", Cluster)) |>
+    mutate(Cluster = gsub("-", "", Cluster)) |> 
+    mutate(ID = paste(Sample, Cluster, sep="_")) |> pull(ID)
 
-#View(UnstainedSignature)
-#colnames(UnstainedSignature)
-```
+  TheseSpecimens <- paste0(TheseSpecimens, ".fcs")
 
-```{r}
-UnstainedSignature_Data <- Luciernaga_QC(x=MyGatingSet[1],
-                                    subsets="monocytes", 
-                                    removestrings=removestrings,
-                                    sample.name="GUID",
-                                    unmixingcontroltype = "cells",
-                                    Unstained = TRUE, 
-                                    ratiopopcutoff = 0.01,
-                                    Verbose = TRUE,
-                                    AFOverlap = AFOverlap,
-                                    stats = "median",
-                                    ExportType = "data",
-                                    SignatureReturnNow = FALSE,
-                                    outpath = outpath,
-                                    Increments=0.1, experiment="Test",
-                                    condition="test")
+  CopyThese <- TheTempFiles[basename(TheTempFiles) %in% TheseSpecimens]
 
-#View(UnstainedSignature)
-#colnames(UnstainedSignature)
-```
+  file_copy(CopyThese, outpath)
 
-```{r}
-library(dplyr)
+  if (Display=="selection"){
+    DataToUse <- DecisionData
+    TheLegend <- TRUE
+    } else {
+    DataToUse <- ReturnedFCS
+    TheLegend <- FALSE}
 
-DecisionData <- UnstainedSignature_Data |> mutate(MainDetector = gsub("_.*", "", UnstainedSignature_Data$Cluster)) |> group_by(MainDetector) |> slice_head(n = 3) |> ungroup()
+  Plots <- purrr::map(.x=ClustersData, .f=SignatureVariants, data=DataToUse, returnType="plots", legend=TheLegend, plotname=LocalPlotName)
 
-Clusters <- sub("_.*", "", DecisionData$Cluster)
+  dir_delete(LuciernagaTemp)
+  #dir.exists(LuciernagaTemp)
 
-ClustersData <- data.frame(table(Clusters)) |> arrange(desc(Freq)) |> pull(Clusters)
-```
-
-```{r}
+  ReturnObjects <- list(Data=ReturnedFCS, Plots=Plots)
+  return(ReturnObjects)
+}
 
 #' @importFrom dplyr select filter pull
 #' @importFrom stringr str_detect
 #' @importFrom plotly ggplotly
-SignatureVariants <- function(x, data, returnType, legend){
+SignatureVariants <- function(x, data, returnType, legend, plotname){
   x <- as.character(x)
 
   UnstainedSignature1 <- data |>
@@ -211,7 +217,8 @@ SignatureVariants <- function(x, data, returnType, legend){
 
   These <- UnstainedSignature1  |> dplyr::filter(stringr::str_detect(Cluster, paste0("^", x))) |> dplyr::pull(Cluster) |> unique()
 
-  Plots <- Luciernaga::QC_ViewSignature(x=These, columnname="Cluster", data=UnstainedSignature1, Normalize=TRUE,TheFormat="wider", legend=legend)
+  Plots <- Luciernaga::QC_ViewSignature(x=These, columnname="Cluster", data=UnstainedSignature1, Normalize=TRUE,TheFormat="wider", legend=legend,
+  plotname=plotname)
 
   if (returnType == "plots"){
     return(Plots)
@@ -222,15 +229,3 @@ SignatureVariants <- function(x, data, returnType, legend){
 }
 ```
 
-```{r}
-Plots <- purrr::map(.x=ClustersData, .f=SignatureVariants, data=DecisionData, returnType="plots", legend=TRUE)
-
-thefilename <- paste0("Signatures_", thenumber)
-
-Utility_Patchwork(x=Plots, filename=thefilename, outfolder=TargetFolder, therows=3, thecolumns=1)
-```
-
-
-```{r}
-print("Go!")
-```
