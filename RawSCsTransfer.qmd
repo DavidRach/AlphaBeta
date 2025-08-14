@@ -71,7 +71,7 @@ TheseFolders <- basename(Experiments)
 
 ```{r}
 #| eval: FALSE
-UpdatedData <- purrr::map(.x=TheseFolders, .f=ExperimentParsed, parsed=AlreadyProcessed, parentFolder=OS, Type="Raw", Samples="unstained")
+UpdatedData <- purrr::map(.x=TheseFolders, .f=ExperimentParsed, parsed=AlreadyProcessed, parentFolder=OS, Type="Raw", Samples="singlecolors")
 
 UpdatedData <- UpdatedData[sapply(UpdatedData, is.data.frame)]
 
@@ -82,7 +82,7 @@ str(Data)
 #unlist(purrr::flatten(UpdatedData))
 
 NewlyProcessed <- bind_rows(Data, UpdatedData)
-write.csv(NewlyProcessed, "data/ProcessedExperiments_AF.csv", row.names=FALSE)
+write.csv(NewlyProcessed, "data/ProcessedExperiments_SCs.csv", row.names=FALSE)
 ```
 
 ```{r}
