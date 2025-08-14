@@ -61,3 +61,9 @@ AlreadyVisualized <- Data |> pull(Experiment)
 
 # Processing
 
+```{r}
+purrr::walk(.x=ExperimentsPresent[1], .f=SingleColorsShop, 
+visualized=AlreadyVisualized, files=Samples,
+template="GatesRaw.csv", AFOverlap="AutofluorescentOverlaps.csv")
+```
+
