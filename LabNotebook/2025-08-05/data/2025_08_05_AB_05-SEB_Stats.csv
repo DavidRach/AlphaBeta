@@ -1,141 +1,141 @@
 "sample","pop","count"
-"2025_08_05_AB_05-INF019-00_SEB(Unmixed).fcs","root",1353632
-"2025_08_05_AB_05-INF019-00_SEB(Unmixed).fcs","/singletsFSC",1227164
-"2025_08_05_AB_05-INF019-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC",1049849
-"2025_08_05_AB_05-INF019-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB",966363
-"2025_08_05_AB_05-INF019-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45",900030
-"2025_08_05_AB_05-INF019-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes",786701
-"2025_08_05_AB_05-INF019-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris",781783
-"2025_08_05_AB_05-INF019-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes",630829
-"2025_08_05_AB_05-INF019-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live",582478
-"2025_08_05_AB_05-INF019-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump+",66102
-"2025_08_05_AB_05-INF019-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-",516376
-"2025_08_05_AB_05-INF019-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells",226668
-"2025_08_05_AB_05-INF019-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2+",1818
-"2025_08_05_AB_05-INF019-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-",224850
-"2025_08_05_AB_05-INF019-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2+",2035
-"2025_08_05_AB_05-INF019-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-",222815
-"2025_08_05_AB_05-INF019-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4+",159020
-"2025_08_05_AB_05-INF019-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-",63795
-"2025_08_05_AB_05-INF019-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8+",53168
-"2025_08_05_AB_05-INF019-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8-",10627
-"2025_08_05_AB_05-INF019-04_SEB(Unmixed).fcs","root",1170048
-"2025_08_05_AB_05-INF019-04_SEB(Unmixed).fcs","/singletsFSC",1047919
-"2025_08_05_AB_05-INF019-04_SEB(Unmixed).fcs","/singletsFSC/singletsSSC",832442
-"2025_08_05_AB_05-INF019-04_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB",792400
-"2025_08_05_AB_05-INF019-04_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45",726812
-"2025_08_05_AB_05-INF019-04_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes",699999
-"2025_08_05_AB_05-INF019-04_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris",685252
-"2025_08_05_AB_05-INF019-04_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes",525577
-"2025_08_05_AB_05-INF019-04_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live",475457
-"2025_08_05_AB_05-INF019-04_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump+",181040
-"2025_08_05_AB_05-INF019-04_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-",294417
-"2025_08_05_AB_05-INF019-04_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells",254381
-"2025_08_05_AB_05-INF019-04_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2+",1082
-"2025_08_05_AB_05-INF019-04_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-",253299
-"2025_08_05_AB_05-INF019-04_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2+",2156
-"2025_08_05_AB_05-INF019-04_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-",251143
-"2025_08_05_AB_05-INF019-04_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4+",159135
-"2025_08_05_AB_05-INF019-04_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-",92008
-"2025_08_05_AB_05-INF019-04_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8+",82231
-"2025_08_05_AB_05-INF019-04_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8-",9777
-"2025_08_05_AB_05-INF019-09_SEB(Unmixed).fcs","root",1710322
-"2025_08_05_AB_05-INF019-09_SEB(Unmixed).fcs","/singletsFSC",1517501
-"2025_08_05_AB_05-INF019-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC",1200599
-"2025_08_05_AB_05-INF019-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB",1151235
-"2025_08_05_AB_05-INF019-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45",1065400
-"2025_08_05_AB_05-INF019-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes",1033295
-"2025_08_05_AB_05-INF019-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris",1025321
-"2025_08_05_AB_05-INF019-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes",859276
-"2025_08_05_AB_05-INF019-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live",813255
-"2025_08_05_AB_05-INF019-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump+",181552
-"2025_08_05_AB_05-INF019-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-",631703
-"2025_08_05_AB_05-INF019-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells",611507
-"2025_08_05_AB_05-INF019-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2+",2259
-"2025_08_05_AB_05-INF019-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-",609248
-"2025_08_05_AB_05-INF019-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2+",6609
-"2025_08_05_AB_05-INF019-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-",602639
-"2025_08_05_AB_05-INF019-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4+",423453
-"2025_08_05_AB_05-INF019-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-",179186
-"2025_08_05_AB_05-INF019-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8+",166633
-"2025_08_05_AB_05-INF019-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8-",12553
-"2025_08_05_AB_05-INF032-00_SEB(Unmixed).fcs","root",1027392
-"2025_08_05_AB_05-INF032-00_SEB(Unmixed).fcs","/singletsFSC",922706
-"2025_08_05_AB_05-INF032-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC",754901
-"2025_08_05_AB_05-INF032-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB",711686
-"2025_08_05_AB_05-INF032-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45",694403
-"2025_08_05_AB_05-INF032-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes",663284
-"2025_08_05_AB_05-INF032-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris",660486
-"2025_08_05_AB_05-INF032-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes",579843
-"2025_08_05_AB_05-INF032-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live",574546
-"2025_08_05_AB_05-INF032-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump+",130858
-"2025_08_05_AB_05-INF032-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-",443688
-"2025_08_05_AB_05-INF032-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells",333941
-"2025_08_05_AB_05-INF032-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2+",2556
-"2025_08_05_AB_05-INF032-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-",331385
-"2025_08_05_AB_05-INF032-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2+",2744
-"2025_08_05_AB_05-INF032-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-",328641
-"2025_08_05_AB_05-INF032-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4+",229604
-"2025_08_05_AB_05-INF032-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-",99037
-"2025_08_05_AB_05-INF032-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8+",84147
-"2025_08_05_AB_05-INF032-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8-",14890
-"2025_08_05_AB_05-INF032-09_SEB(Unmixed).fcs","root",1155456
-"2025_08_05_AB_05-INF032-09_SEB(Unmixed).fcs","/singletsFSC",1036243
-"2025_08_05_AB_05-INF032-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC",850931
-"2025_08_05_AB_05-INF032-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB",814746
-"2025_08_05_AB_05-INF032-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45",804398
-"2025_08_05_AB_05-INF032-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes",780288
-"2025_08_05_AB_05-INF032-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris",773931
-"2025_08_05_AB_05-INF032-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes",632145
-"2025_08_05_AB_05-INF032-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live",608720
-"2025_08_05_AB_05-INF032-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump+",165587
-"2025_08_05_AB_05-INF032-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-",443133
-"2025_08_05_AB_05-INF032-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells",416016
-"2025_08_05_AB_05-INF032-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2+",8092
-"2025_08_05_AB_05-INF032-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-",407924
-"2025_08_05_AB_05-INF032-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2+",5115
-"2025_08_05_AB_05-INF032-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-",402809
-"2025_08_05_AB_05-INF032-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4+",295622
-"2025_08_05_AB_05-INF032-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-",107187
-"2025_08_05_AB_05-INF032-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8+",92379
-"2025_08_05_AB_05-INF032-09_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8-",14808
-"2025_08_05_AB_05-INF180-00_SEB(Unmixed).fcs","root",1661856
-"2025_08_05_AB_05-INF180-00_SEB(Unmixed).fcs","/singletsFSC",1483795
-"2025_08_05_AB_05-INF180-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC",1251178
-"2025_08_05_AB_05-INF180-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB",1155566
-"2025_08_05_AB_05-INF180-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45",1092013
-"2025_08_05_AB_05-INF180-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes",957404
-"2025_08_05_AB_05-INF180-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris",949967
-"2025_08_05_AB_05-INF180-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes",763986
-"2025_08_05_AB_05-INF180-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live",704822
-"2025_08_05_AB_05-INF180-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump+",95251
-"2025_08_05_AB_05-INF180-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-",609571
-"2025_08_05_AB_05-INF180-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells",307489
-"2025_08_05_AB_05-INF180-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2+",1245
-"2025_08_05_AB_05-INF180-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-",306244
-"2025_08_05_AB_05-INF180-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2+",3346
-"2025_08_05_AB_05-INF180-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-",302898
-"2025_08_05_AB_05-INF180-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4+",188237
-"2025_08_05_AB_05-INF180-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-",114661
-"2025_08_05_AB_05-INF180-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8+",96245
-"2025_08_05_AB_05-INF180-00_SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8-",18416
-"2025_08_05_AB_05-NY068_05-SEB(Unmixed).fcs","root",1075160
-"2025_08_05_AB_05-NY068_05-SEB(Unmixed).fcs","/singletsFSC",975717
-"2025_08_05_AB_05-NY068_05-SEB(Unmixed).fcs","/singletsFSC/singletsSSC",794081
-"2025_08_05_AB_05-NY068_05-SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB",749503
-"2025_08_05_AB_05-NY068_05-SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45",740354
-"2025_08_05_AB_05-NY068_05-SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes",711624
-"2025_08_05_AB_05-NY068_05-SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris",706258
-"2025_08_05_AB_05-NY068_05-SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes",533220
-"2025_08_05_AB_05-NY068_05-SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live",529237
-"2025_08_05_AB_05-NY068_05-SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump+",46817
-"2025_08_05_AB_05-NY068_05-SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-",482420
-"2025_08_05_AB_05-NY068_05-SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells",406616
-"2025_08_05_AB_05-NY068_05-SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2+",4785
-"2025_08_05_AB_05-NY068_05-SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-",401831
-"2025_08_05_AB_05-NY068_05-SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2+",30549
-"2025_08_05_AB_05-NY068_05-SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-",371282
-"2025_08_05_AB_05-NY068_05-SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4+",259046
-"2025_08_05_AB_05-NY068_05-SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-",112236
-"2025_08_05_AB_05-NY068_05-SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8+",106310
-"2025_08_05_AB_05-NY068_05-SEB(Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8-",5926
+"2025_08_05_AB_05-INF019-00_SEB (Unmixed).fcs","root",1353632
+"2025_08_05_AB_05-INF019-00_SEB (Unmixed).fcs","/singletsFSC",1227164
+"2025_08_05_AB_05-INF019-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC",1049849
+"2025_08_05_AB_05-INF019-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB",966363
+"2025_08_05_AB_05-INF019-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45",900030
+"2025_08_05_AB_05-INF019-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes",786701
+"2025_08_05_AB_05-INF019-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris",781783
+"2025_08_05_AB_05-INF019-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes",630830
+"2025_08_05_AB_05-INF019-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live",582478
+"2025_08_05_AB_05-INF019-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump+",66102
+"2025_08_05_AB_05-INF019-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-",516376
+"2025_08_05_AB_05-INF019-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells",226668
+"2025_08_05_AB_05-INF019-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2+",1818
+"2025_08_05_AB_05-INF019-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-",224850
+"2025_08_05_AB_05-INF019-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2+",2035
+"2025_08_05_AB_05-INF019-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-",222815
+"2025_08_05_AB_05-INF019-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4+",159020
+"2025_08_05_AB_05-INF019-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-",63795
+"2025_08_05_AB_05-INF019-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8+",53168
+"2025_08_05_AB_05-INF019-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8-",10627
+"2025_08_05_AB_05-INF019-04_SEB (Unmixed).fcs","root",1170048
+"2025_08_05_AB_05-INF019-04_SEB (Unmixed).fcs","/singletsFSC",1047919
+"2025_08_05_AB_05-INF019-04_SEB (Unmixed).fcs","/singletsFSC/singletsSSC",832442
+"2025_08_05_AB_05-INF019-04_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB",792400
+"2025_08_05_AB_05-INF019-04_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45",726812
+"2025_08_05_AB_05-INF019-04_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes",699999
+"2025_08_05_AB_05-INF019-04_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris",685252
+"2025_08_05_AB_05-INF019-04_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes",525577
+"2025_08_05_AB_05-INF019-04_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live",475457
+"2025_08_05_AB_05-INF019-04_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump+",181040
+"2025_08_05_AB_05-INF019-04_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-",294417
+"2025_08_05_AB_05-INF019-04_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells",254381
+"2025_08_05_AB_05-INF019-04_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2+",1082
+"2025_08_05_AB_05-INF019-04_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-",253299
+"2025_08_05_AB_05-INF019-04_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2+",2156
+"2025_08_05_AB_05-INF019-04_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-",251143
+"2025_08_05_AB_05-INF019-04_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4+",159135
+"2025_08_05_AB_05-INF019-04_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-",92008
+"2025_08_05_AB_05-INF019-04_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8+",82231
+"2025_08_05_AB_05-INF019-04_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8-",9777
+"2025_08_05_AB_05-INF019-09_SEB (Unmixed).fcs","root",1710322
+"2025_08_05_AB_05-INF019-09_SEB (Unmixed).fcs","/singletsFSC",1517501
+"2025_08_05_AB_05-INF019-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC",1200599
+"2025_08_05_AB_05-INF019-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB",1151235
+"2025_08_05_AB_05-INF019-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45",1065400
+"2025_08_05_AB_05-INF019-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes",1033295
+"2025_08_05_AB_05-INF019-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris",1025321
+"2025_08_05_AB_05-INF019-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes",859276
+"2025_08_05_AB_05-INF019-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live",813255
+"2025_08_05_AB_05-INF019-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump+",181552
+"2025_08_05_AB_05-INF019-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-",631703
+"2025_08_05_AB_05-INF019-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells",611507
+"2025_08_05_AB_05-INF019-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2+",2259
+"2025_08_05_AB_05-INF019-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-",609248
+"2025_08_05_AB_05-INF019-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2+",6609
+"2025_08_05_AB_05-INF019-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-",602639
+"2025_08_05_AB_05-INF019-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4+",423453
+"2025_08_05_AB_05-INF019-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-",179186
+"2025_08_05_AB_05-INF019-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8+",166633
+"2025_08_05_AB_05-INF019-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8-",12553
+"2025_08_05_AB_05-INF032-00_SEB (Unmixed).fcs","root",1027392
+"2025_08_05_AB_05-INF032-00_SEB (Unmixed).fcs","/singletsFSC",922706
+"2025_08_05_AB_05-INF032-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC",754901
+"2025_08_05_AB_05-INF032-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB",711686
+"2025_08_05_AB_05-INF032-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45",694403
+"2025_08_05_AB_05-INF032-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes",663284
+"2025_08_05_AB_05-INF032-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris",660486
+"2025_08_05_AB_05-INF032-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes",579843
+"2025_08_05_AB_05-INF032-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live",574546
+"2025_08_05_AB_05-INF032-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump+",130858
+"2025_08_05_AB_05-INF032-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-",443688
+"2025_08_05_AB_05-INF032-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells",333941
+"2025_08_05_AB_05-INF032-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2+",2556
+"2025_08_05_AB_05-INF032-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-",331385
+"2025_08_05_AB_05-INF032-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2+",2744
+"2025_08_05_AB_05-INF032-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-",328641
+"2025_08_05_AB_05-INF032-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4+",229604
+"2025_08_05_AB_05-INF032-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-",99037
+"2025_08_05_AB_05-INF032-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8+",84147
+"2025_08_05_AB_05-INF032-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8-",14890
+"2025_08_05_AB_05-INF032-09_SEB (Unmixed).fcs","root",1155456
+"2025_08_05_AB_05-INF032-09_SEB (Unmixed).fcs","/singletsFSC",1036243
+"2025_08_05_AB_05-INF032-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC",850931
+"2025_08_05_AB_05-INF032-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB",814746
+"2025_08_05_AB_05-INF032-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45",804398
+"2025_08_05_AB_05-INF032-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes",780288
+"2025_08_05_AB_05-INF032-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris",773931
+"2025_08_05_AB_05-INF032-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes",632145
+"2025_08_05_AB_05-INF032-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live",608720
+"2025_08_05_AB_05-INF032-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump+",165587
+"2025_08_05_AB_05-INF032-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-",443133
+"2025_08_05_AB_05-INF032-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells",416016
+"2025_08_05_AB_05-INF032-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2+",8092
+"2025_08_05_AB_05-INF032-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-",407924
+"2025_08_05_AB_05-INF032-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2+",5115
+"2025_08_05_AB_05-INF032-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-",402809
+"2025_08_05_AB_05-INF032-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4+",295622
+"2025_08_05_AB_05-INF032-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-",107187
+"2025_08_05_AB_05-INF032-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8+",92379
+"2025_08_05_AB_05-INF032-09_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8-",14808
+"2025_08_05_AB_05-INF180-00_SEB (Unmixed).fcs","root",1661856
+"2025_08_05_AB_05-INF180-00_SEB (Unmixed).fcs","/singletsFSC",1483795
+"2025_08_05_AB_05-INF180-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC",1251178
+"2025_08_05_AB_05-INF180-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB",1155566
+"2025_08_05_AB_05-INF180-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45",1092013
+"2025_08_05_AB_05-INF180-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes",957404
+"2025_08_05_AB_05-INF180-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris",949967
+"2025_08_05_AB_05-INF180-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes",763986
+"2025_08_05_AB_05-INF180-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live",704822
+"2025_08_05_AB_05-INF180-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump+",95251
+"2025_08_05_AB_05-INF180-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-",609571
+"2025_08_05_AB_05-INF180-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells",307489
+"2025_08_05_AB_05-INF180-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2+",1245
+"2025_08_05_AB_05-INF180-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-",306244
+"2025_08_05_AB_05-INF180-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2+",3346
+"2025_08_05_AB_05-INF180-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-",302898
+"2025_08_05_AB_05-INF180-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4+",188237
+"2025_08_05_AB_05-INF180-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-",114661
+"2025_08_05_AB_05-INF180-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8+",96245
+"2025_08_05_AB_05-INF180-00_SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8-",18416
+"2025_08_05_AB_05-NY068_05-SEB (Unmixed).fcs","root",1075160
+"2025_08_05_AB_05-NY068_05-SEB (Unmixed).fcs","/singletsFSC",975717
+"2025_08_05_AB_05-NY068_05-SEB (Unmixed).fcs","/singletsFSC/singletsSSC",794081
+"2025_08_05_AB_05-NY068_05-SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB",749503
+"2025_08_05_AB_05-NY068_05-SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45",740354
+"2025_08_05_AB_05-NY068_05-SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes",711624
+"2025_08_05_AB_05-NY068_05-SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris",706258
+"2025_08_05_AB_05-NY068_05-SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes",533220
+"2025_08_05_AB_05-NY068_05-SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live",529237
+"2025_08_05_AB_05-NY068_05-SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump+",46817
+"2025_08_05_AB_05-NY068_05-SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-",482420
+"2025_08_05_AB_05-NY068_05-SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells",406616
+"2025_08_05_AB_05-NY068_05-SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2+",4785
+"2025_08_05_AB_05-NY068_05-SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-",401831
+"2025_08_05_AB_05-NY068_05-SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2+",30549
+"2025_08_05_AB_05-NY068_05-SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-",371282
+"2025_08_05_AB_05-NY068_05-SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4+",259046
+"2025_08_05_AB_05-NY068_05-SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-",112236
+"2025_08_05_AB_05-NY068_05-SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8+",106310
+"2025_08_05_AB_05-NY068_05-SEB (Unmixed).fcs","/singletsFSC/singletsSSC/singletsSSCB/CD45/NotMonocytes/nonDebris/lymphocytes/live/Dump-/Tcells/Vd2-/Va7.2-/CD4-/CD8-",5926
