@@ -1,0 +1,84 @@
+---
+title: "Monocytes at Thaw"
+toc: true
+---
+
+```{r}
+#| include: FALSE
+#| message: FALSE
+#| warning: FALSE
+library(dplyr)
+library(ggplot2)
+library(Coereba)
+
+Variable <- "CD14"
+```
+
+```{r}
+#| include: FALSE
+shape_sex <- c("Female" = 22, "Male" = 21)
+fill_sex <- c("Female" = "white", "Male" = "black")
+
+shape_ptype <- c("HU" = 22, "HEU-lo" = 21, "HEU-hi" = 21)
+fill_ptype <- c("HU" = "white", "HEU-lo" = "darkgray", "HEU-hi" = "black")
+
+shape_art <- c("HU" = 22, "HEU" = 21)
+fill_art <- c("HU" = "white", "HEU" = "black")
+
+shape_viral <- c("NoViral" = 22, "Viral" = 21)
+fill_viral <- c("NoViral" = "white", "Viral" = "black")
+```
+
+
+```{r}
+#| include: FALSE
+Data <- read.csv("data/ThawCounts.csv", check.names=FALSE)
+Data$ptype <- factor(Data$ptype, levels = c("HU", "HEU-lo", "HEU-hi"))
+Data$timepoint <- factor(Data$timepoint, levels = c(0, 4, 9))
+
+Data <- Data |> mutate(CD14Freq = CD14/CD45) 
+
+Data$CD14Freq <- round(Data$CD14Freq, 2)
+```
+
+# Count
+
+```{r}
+#| warning: FALSE
+#| include: FALSE
+
+ControlPlot <- Utility_LongitudinalBehemoth(data=Data, Variable=Variable,
+ GlobalFactor="timepoint", LocalFactor="ptype", shape_palette = shape_ptype,
+ fill_palette = fill_ptype)
+
+ControlPlot  <- ControlPlot + labs(y="Monocytes per sample")
+```
+
+```{r}
+#| echo: FALSE
+#| warning: FALSE
+
+ControlPlot
+```
+
+# Frequency
+
+```{r}
+#| warning: FALSE
+#| include: FALSE
+Variable <- "CD14Freq"
+
+ControlPlotFreq <- Utility_LongitudinalBehemoth(data=Data, Variable=Variable,
+ GlobalFactor="timepoint", LocalFactor="ptype", shape_palette = shape_ptype,
+ fill_palette = fill_ptype)
+
+ControlPlotFreq  <- ControlPlotFreq + labs(y="Monocytes (% of CD45+ cells")
+```
+
+```{r}
+#| echo: FALSE
+#| warning: FALSE
+
+ControlPlotFreq
+```
+

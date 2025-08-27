@@ -1,0 +1,117 @@
+---
+title: "Data Parse Thaw"
+format: html
+---
+
+
+```{r}
+library(dplyr)
+library(purrr)
+library(tidyr)
+library(stringr)
+#library(HEULog)
+```
+
+Call in the metadata file
+```{r}
+Linux <- file.path("/home", "david", "Documents")
+Windows <- file.path("C:", "Users", "12692", "Documents")
+OperatingSystem <- Sys.info()["sysname"]
+if(OperatingSystem == "Linux"){OS <- Linux
+} else if (OperatingSystem == "Windows"){OS <- Windows}
+ReferenceData <- file.path(OS, "HEUData", "data")
+```
+
+```{r}
+Folders <- list.files("LabNotebook", pattern="2025-", include.dirs=TRUE, full.names=TRUE)
+```
+
+```{r}
+#' Parses out the current data folders for data .csv files
+#' 
+#' @importFrom dplyr mutate rename
+#' @importFrom utils read.csv
+#' 
+#' @return A combined .csv file for the experiment day with condition column
+#' 
+#' @export
+DataLocateThaw <- function(x){
+    Date <- basename(x)
+    Files <- list.files(x, full.names=TRUE)
+    Thaw <- Files[grep("Thaw", Files)]
+    if (length(Thaw) == 0){return(NULL)}
+
+    Dataset <- read.csv(Thaw, check.names=FALSE)
+    Dataset <- Dataset |> mutate(Date=Date)
+    Dataset$name <- gsub("_Cord", "_00_00", Dataset$name)
+    Dataset <- Dataset |> rename(bid=name)
+    return(Dataset)
+}
+```
+
+```{r}
+# x <- Folders[8]
+FolderReturns <- map(.f=DataLocateThaw, .x=Folders)
+Saved <- purrr::compact(FolderReturns)
+Dataset <- bind_rows(Saved)
+```
+
+```{r}
+Dataset$bid <- gsub("_00$", "_00_00", Dataset$bid)
+Dataset$bid <- gsub("-\\d+_", "_", Dataset$bid)
+
+Dataset <- Dataset |> mutate(timepoint = case_when(
+    stringr::str_detect(bid, "_00_") ~ "00",
+    stringr::str_detect(bid, "_04_") ~ "04",
+    stringr::str_detect(bid, "_09_") ~ "09",
+    TRUE ~ "10"
+))
+
+#Dataset <- Dataset |> filter(timepoint %in% "10")
+Dataset <- Dataset |> mutate(vial = bid)
+Dataset$vial <-sub(".*_", "", Dataset$vial)
+Dataset$bid <- sub("_.*", "", Dataset$bid)
+Dataset
+````
+
+
+```{r}
+Dataset1 <- Dataset |> dplyr::filter(!bid %in% c("NY068", "ND006", "ND050"))
+
+file <- list.files(ReferenceData, "U01Metadata2025.csv", full.names=TRUE)
+
+Metadata <- read.csv(file, check.names=FALSE) |>
+     select(bid, infant_sex, ptype, screen_vl, del_vl,
+     del_cd4, gestage_d1, delivdt, 
+     Infant_Collection_Date_4, Infant_Collection_Date_9)
+
+Metadata$screen_vl <- as.numeric(Metadata$screen_vl)
+Metadata$del_vl <- as.numeric(Metadata$del_vl)
+Metadata$del_cd4 <- as.numeric(Metadata$del_cd4)
+Metadata$delivdt <- lubridate::mdy(Metadata$delivdt)
+Metadata <- Metadata |> rename(FourMonthDate=Infant_Collection_Date_4, NineMonthDate=Infant_Collection_Date_9)
+Metadata$FourMonthDate <- lubridate::mdy(Metadata$FourMonthDate)
+Metadata$NineMonthDate <- lubridate::mdy(Metadata$NineMonthDate)
+
+Metadata$bid <- gsub("INF-", "", Metadata$bid)
+Metadata$bid <- sub("^0+", "", Metadata$bid)
+Metadata$bid <- sub("-[0-9]{1}", "", Metadata$bid)
+Metadata$bid <- str_pad(Metadata$bid, 4, pad="0")
+Metadata <- Metadata |> mutate(bid = ifelse(grepl("^[0-9]", bid), paste0("INF", bid), bid))
+Metadata <- Metadata |> unique()
+
+Dataset1$bid <- gsub("INF", "", Dataset1$bid)
+Dataset1$bid <- str_pad(Dataset1$bid, 4, pad="0")
+Dataset1 <- Dataset1 |> mutate(bid = ifelse(grepl("^[0-9]", bid), paste0("INF", bid), bid))
+#Dataset1 |> unique()
+
+Unified <- left_join(Dataset1, Metadata) |> relocate(infant_sex, ptype, screen_vl, del_vl, del_cd4, gestage_d1,
+ delivdt, FourMonthDate, NineMonthDate, .after=Date)
+
+write.csv(Unified, "data/ThawCounts.csv", row.names=FALSE)
+```
+
+```{r}
+print("Execute order 66")
+```
+
