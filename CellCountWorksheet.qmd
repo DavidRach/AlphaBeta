@@ -18,13 +18,13 @@ library(Luciernaga)
 # Copying the files 
 
 ```{r}
-Experiment <- "AB_01"
+Experiment <- "AB_07"
 ```
 
 Either leave date NULL or specify the date name of the LabNotebook folder
 
 ```{r}
-ThisDate <- "2025-07-22"
+ThisDate <- "2025-08-22"
 # ThisDate <- NULL
 
 if (is.null(ThisDate)){
@@ -96,6 +96,12 @@ MyCytoSet <- load_cytoset_from_fcs(files, truncate_max_range = FALSE,
                                  transformation = FALSE)
 
 MyGatingSet <- GatingSet(MyCytoSet)
+
+SelectedColumns <- c("V3-A", "B4-A", "R1-A")
+Biexponential <- flowjo_biexp_trans(channelRange=256,
+ maxValue=1000000, pos=5.25, neg=0, width=-1000)
+TransformList <- transformerList(SelectedColumns, Biexponential)
+MyGatingSet <- transform(MyGatingSet, TransformList)
 
 CellCountGates <- data.table::fread("GatesCellCounts.csv")
 CellCountGating <- gatingTemplate(CellCountGates)
