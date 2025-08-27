@@ -1,12 +1,37 @@
 ---
-title: "Untitled"
+title: "Cell Counts Worksheet"
 format: html
 ---
+
+```{r}
+#library(dplyr)
+#library(tibble)
+#library(purrr)
+
+library(Luciernaga)
+
+#library(flowCore)
+#library(flowWorkspace)
+#library(openCyto)
+```
 
 # Copying the files 
 
 ```{r}
-Experiment <- "AB_06"
+Experiment <- "AB_01"
+```
+
+Either leave date NULL or specify the date name of the LabNotebook folder
+
+```{r}
+ThisDate <- "2025-07-22"
+# ThisDate <- NULL
+
+if (is.null(ThisDate)){
+    ThisDate <- Sys.Date()
+} else {
+    ThisDate <- as.Date(ThisDate)
+}
 ```
 
 If transferring in the CellCount .fcs files, ensure correct USB/external drive is specified
@@ -20,30 +45,21 @@ if(OperatingSystem == "Linux"){OS <- Linux
 } else if (OperatingSystem == "Windows"){OS <- Windows}
 
 CountFiles <- file.path(OS, "CellCounts")
-```
 
-Either leave date NULL or specify the date name of the LabNotebook folder
-
-```{r}
-ThisDate <- "2025-08-07"
-# ThisDate <- NULL
-
-if (is.null(ThisDate)){
-    ThisDate <- Sys.Date()
-} else {
-    ThisDate <- as.Date(ThisDate)
-}
-```
-
-```{r}
 Folder <- file.path("LabNotebook", ThisDate)
 CellCountFolder <- list.files(Folder, pattern="CellCounts$", full.names=TRUE)
+```
 
+```{r}
 if (length(CellCountFolder) == 0){
     CellCountFolder <- file.path(Folder, "CellCounts")
     dir.create(CellCountFolder)
     list.files(Folder, pattern="CellCounts$", full.names=TRUE)
 } else {CellCountFolder <- CellCountFolder}
+
+ExistingFCS <- list.files(CellCountFolder, pattern=".fcs", full.names=TRUE)
+
+if (!length(ExistingFCS) >= 1){
 
 FCSFiles <- list.files(CountFiles, pattern=".fcs", full.names=TRUE)
 files <- FCSFiles[grep(Experiment, FCSFiles)]
@@ -51,7 +67,7 @@ files <- FCSFiles[grep(Experiment, FCSFiles)]
 Info <- file.info(files)
 Info$sizeMB <- Info$size / 1048576
 
-TooLarge <- Info |> dplyr::filter(sizeMB >= 5)
+TooLarge <- Info |> dplyr::filter(sizeMB >= 49)
 if (nrow(TooLarge) > 0){
     RemoveTheseBeforeCommiting <- TooLarge |> tibble::rownames_to_column(var="bid") |>
          dplyr::pull(bid) |> basename()
@@ -59,11 +75,50 @@ if (nrow(TooLarge) > 0){
     message(TotalRemove, " files are too large to send to GitHub. Please ensure they are removed")
 }
 
-
 file.copy(files, CellCountFolder, overwrite=TRUE)
+}
+```
+
+```{r}
+print("Go!")
 ```
 
 # Gating the files
 
+```{r}
+library(flowCore)
+library(flowWorkspace)
+library(openCyto)
 
+files <- list.files(CellCountFolder, pattern=".fcs", full.names=TRUE)
+
+MyCytoSet <- load_cytoset_from_fcs(files, truncate_max_range = FALSE,
+                                 transformation = FALSE)
+
+MyGatingSet <- GatingSet(MyCytoSet)
+
+CellCountGates <- data.table::fread("GatesCellCounts.csv")
+CellCountGating <- gatingTemplate(CellCountGates)
+gt_gating(CellCountGating, MyGatingSet)
+```
+
+```{r}
+Plots <- purrr::map(.x=MyGatingSet, .f=Utility_GatingPlots,
+    sample.name=c("GROUPNAME", "TUBENAME"),
+    removestrings=c("Unmixed", "(", ")", ".fcs", " "),
+    gtFile=CellCountGates, 
+    outpath=NULL,
+    returnType="patchwork",
+    plotname=TRUE)
+
+fileName <- paste(Experiment, "CellCount", "Visuals", sep="_")
+
+Utility_Patchwork(x=Plots, filename=fileName, outfolder=CellCountFolder,
+thecolumns = 1, therows=1, returntype="pdf", NotListofList = FALSE,
+patches=TRUE)
+```
+
+```{r}
+print("Go!")
+```
 
