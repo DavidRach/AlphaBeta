@@ -1,0 +1,69 @@
+---
+title: "Untitled"
+format: html
+---
+
+# Copying the files 
+
+```{r}
+Experiment <- "AB_06"
+```
+
+If transferring in the CellCount .fcs files, ensure correct USB/external drive is specified
+```{r}
+Linux <- file.path("/media", "david", "DavidRach")
+#Windows <- file.path("D:")
+Windows <- file.path("E:")
+
+OperatingSystem <- Sys.info()["sysname"]
+if(OperatingSystem == "Linux"){OS <- Linux
+} else if (OperatingSystem == "Windows"){OS <- Windows}
+
+CountFiles <- file.path(OS, "CellCounts")
+```
+
+Either leave date NULL or specify the date name of the LabNotebook folder
+
+```{r}
+ThisDate <- "2025-08-07"
+# ThisDate <- NULL
+
+if (is.null(ThisDate)){
+    ThisDate <- Sys.Date()
+} else {
+    ThisDate <- as.Date(ThisDate)
+}
+```
+
+```{r}
+Folder <- file.path("LabNotebook", ThisDate)
+CellCountFolder <- list.files(Folder, pattern="CellCounts$", full.names=TRUE)
+
+if (length(CellCountFolder) == 0){
+    CellCountFolder <- file.path(Folder, "CellCounts")
+    dir.create(CellCountFolder)
+    list.files(Folder, pattern="CellCounts$", full.names=TRUE)
+} else {CellCountFolder <- CellCountFolder}
+
+FCSFiles <- list.files(CountFiles, pattern=".fcs", full.names=TRUE)
+files <- FCSFiles[grep(Experiment, FCSFiles)]
+
+Info <- file.info(files)
+Info$sizeMB <- Info$size / 1048576
+
+TooLarge <- Info |> dplyr::filter(sizeMB >= 5)
+if (nrow(TooLarge) > 0){
+    RemoveTheseBeforeCommiting <- TooLarge |> tibble::rownames_to_column(var="bid") |>
+         dplyr::pull(bid) |> basename()
+    TotalRemove <- length(RemoveTheseBeforeCommiting)
+    message(TotalRemove, " files are too large to send to GitHub. Please ensure they are removed")
+}
+
+
+file.copy(files, CellCountFolder, overwrite=TRUE)
+```
+
+# Gating the files
+
+
+
