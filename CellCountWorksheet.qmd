@@ -19,13 +19,13 @@ library(Luciernaga)
 # Copying the files 
 
 ```{r}
-Experiment <- "AB_07"
+Experiment <- "AB_01"
 ```
 
 Either leave date NULL or specify the date name of the LabNotebook folder
 
 ```{r}
-ThisDate <- "2025-08-22"
+ThisDate <- "2025-07-22"
 # ThisDate <- NULL
 
 if (is.null(ThisDate)){
@@ -206,6 +206,10 @@ ThawCounts <- Assembly |>
 FileName <- paste0(DayForward, "_ThawCounts.csv")
 StoreHere <- file.path(Notebook, FileName)
 write.csv(ThawCounts, StoreHere, row.names=FALSE)
+```
+
+```{r}
+print("Go!")
 ```
 
 
