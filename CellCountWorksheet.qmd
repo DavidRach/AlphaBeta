@@ -19,13 +19,13 @@ library(Luciernaga)
 # Copying the files 
 
 ```{r}
-Experiment <- "AB_01"
+Experiment <- "AB_08"
 ```
 
 Either leave date NULL or specify the date name of the LabNotebook folder
 
 ```{r}
-ThisDate <- "2025-07-22"
+ThisDate <- "2025-08-28"
 # ThisDate <- NULL
 
 if (is.null(ThisDate)){
@@ -39,7 +39,8 @@ if (is.null(ThisDate)){
 
 If transferring in the CellCount .fcs files, ensure correct USB/external drive is specified
 ```{r}
-Linux <- file.path("/media", "david", "DavidRach")
+#Linux <- file.path("/media", "david", "DavidRach")
+Linux <- file.path("/media", "david", "DAVIDRACH")
 #Windows <- file.path("D:")
 Windows <- file.path("E:")
 
