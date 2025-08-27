@@ -29,8 +29,10 @@ ThisDate <- "2025-08-22"
 
 if (is.null(ThisDate)){
     ThisDate <- Sys.Date()
+    DayForward <- ThisDate + 1
 } else {
     ThisDate <- as.Date(ThisDate)
+    DayForward <- ThisDate
 }
 ```
 
@@ -127,4 +129,25 @@ patches=TRUE)
 ```{r}
 print("Go!")
 ```
+
+# Deriving Count
+
+```{r}
+#plot(MyGatingSet)
+nameKeyword <- c("GROUPNAME", "TUBENAME")
+
+TheData <- purrr::map(.x=MyGatingSet, Wetlab_Concentration, subset = "CD45",
+               nameKeyword=nameKeyword, DilutionMultiplier=100, TotalVolume=0.5) |> dplyr::bind_rows()
+
+Notebook <- file.path("LabNotebook", DayForward)
+#list.files(Notebook)
+
+StorageName <- paste0("CellCounts_", DayForward,".csv")
+StorageLocation <- file.path(Notebook, StorageName)
+write.csv(TheData, StorageLocation, row.names=FALSE)
+```
+
+# Updating Volumes for Total
+
+
 
