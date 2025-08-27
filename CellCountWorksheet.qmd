@@ -7,6 +7,7 @@ format: html
 #library(dplyr)
 #library(tibble)
 #library(purrr)
+#library(DataEditR)
 
 library(Luciernaga)
 
@@ -148,6 +149,23 @@ write.csv(TheData, StorageLocation, row.names=FALSE)
 ```
 
 # Updating Volumes for Total
+
+```{r}
+EditableData <- TheData |> dplyr::select(-TotalScientific, -TimeSeconds)
+NewData <- DataEditR::data_edit(EditableData)
+RestData <- Wetlab_Rest(data=NewData, DesiredConcentration_MillionperML=6,
+ MaxMLperTube=1, returntype="data")
+
+Changes <- RestData
+
+StorageName <- paste0("CellRestCounts_", DayForward,".csv")
+
+ImageName <- paste0("CellRestCounts_", DayForward, ".png")
+StorageLocation <- file.path(Notebook, StorageName)
+write.csv(Changes, StorageLocation, row.names=FALSE)
+
+DataPlot <- Luciernaga:::RestTable(data=Changes, outpath=Notebook, filename=ImageName, ColorSelection=NULL, vwidth=1200)
+```
 
 
 
