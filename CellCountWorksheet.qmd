@@ -19,14 +19,14 @@ library(Luciernaga)
 # Copying the files 
 
 ```{r}
-Experiment <- "AB_08"
+Experiment <- "AB_09"
 ```
 
 Either leave date NULL or specify the date name of the LabNotebook folder
 
 ```{r}
-ThisDate <- "2025-08-28"
-# ThisDate <- NULL
+#ThisDate <- "2025-08-28"
+ThisDate <- NULL
 
 if (is.null(ThisDate)){
     ThisDate <- Sys.Date()
@@ -50,7 +50,7 @@ if(OperatingSystem == "Linux"){OS <- Linux
 
 CountFiles <- file.path(OS, "CellCounts")
 
-Folder <- file.path("LabNotebook", ThisDate)
+Folder <- file.path("LabNotebook", DayForward)
 CellCountFolder <- list.files(Folder, pattern="CellCounts$", full.names=TRUE)
 ```
 
