@@ -1,0 +1,93 @@
+---
+title: "TcellWorkspace"
+format: html
+---
+
+```{r}
+library(dplyr)
+library(stringr)
+library(purrr)
+library(Luciernaga)
+```
+
+```{r}
+SSD <- file.path("/media", "david", "DavidSSD")
+StorageLocation <- file.path(SSD, "AlphaBeta", "Tcells")
+Existing <- list.files(StorageLocation, pattern=".fcs", full.names=TRUE)
+if (length(Existing) > 0){
+    Existing <- str_extract(Existing, "AB_\\d{2}") |> unique()
+} else {Existing <- NULL}
+
+HDD <- file.path("/media", "david", "DavidRach")
+FullFile <- file.path(HDD, "AlphaBeta")
+files <- list.files(FullFile, pattern=".fcs", full.names=TRUE)
+Present <- str_extract(files, "AB_\\d{2}") |> unique()
+
+if (!is.null(Existing)){
+    TheseExperiments <- setdiff(Present, Existing)
+} else {TheseExperiments <- Present}
+```
+
+```{r}
+Workspaces <- list.files("LabNotebook", pattern=".wsp", recursive=TRUE, full.names=TRUE)
+
+WorkspaceData <- data.frame(Workspaces, check.names=FALSE)
+WorkspaceData <- WorkspaceData |> mutate(Experiment = str_extract(Workspaces, "AB_\\d{2}"))
+TheseWorkspaces <- WorkspaceData |> dplyr::filter(Experiment %in% TheseExperiments) |>
+     dplyr::pull(Workspaces)
+```
+
+```{r}
+CellPopExtract <- function(x, path, keywords="GROUPNAME", subset, outpath, addon=NULL){
+ws <- CytoML::open_flowjo_xml(x)
+gs <- CytoML::flowjo_to_gatingset(ws, name=1, path = path, keywords = keywords)
+#flowCore::pData(gs)
+#flowCore::plot(gs)
+SubsetSolo <- flowWorkspace::gs_pop_get_data(gs, subset, inverse.transform = TRUE)
+#flowCore::pData(SubsetSolo)
+#x <- SubsetSolo[[1]]
+purrr::walk(.x=SubsetSolo, .f=FCS_Subset_Copy, keywords=keywords,
+ outpath=outpath, addon=addon)
+}
+
+FCS_Subset_Copy <- function(x, keywords, outpath, addon){
+
+    if (length(keywords) > 0){
+        First <- flowCore::keyword(x, keywords[1])
+
+    if (length(keywords) > 1) {
+        Second <- flowCore::keyword(x, keywords[2])
+
+    } else {Nomenclature <- First}
+
+    if (length(keywords) > 2) {
+        Third <- flowCore::keyword(x, keywords[3])
+
+    } else {Nomenclature <- paste(First, Second, sep="_")}
+
+    if (length(keywords) > 3) {
+        stop("Please choose only three keywords, thank you!")
+    } else {Nomenclature <- paste(First, Second, Third, sep="_")}
+    }
+
+if (!is.null(addon)){FileName <- paste(Nomenclature, addon, sep="_")
+    } else {FileName <- Nomenclature}
+
+FileNameOut <- paste0(FileName, ".fcs")
+if (is.null(outpath)) {outpath <- getwd()}
+FinalRestingPlace <- file.path(outpath, FileNameOut)
+#FinalRestingPlace
+
+new_fcs <- flowWorkspace::cytoframe_to_flowFrame(x)
+new_fcs@description$GUID <- FileName
+flowCore::write.FCS(new_fcs, filename = FinalRestingPlace, delimiter="#")
+}
+```
+
+```{r}
+purrr::walk(.x=Workspaces[12], .f=CellPopExtract,
+ path=FullFile,
+ keywords=c("$PROJ", "GROUPNAME", "TUBENAME"), 
+ subset="Tcells", outpath=StorageLocation)
+```
+
