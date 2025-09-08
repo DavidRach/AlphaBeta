@@ -69,7 +69,7 @@ Select the desired workspace group (2=Ctrl, 3=PPD, 4=SEB)
 ```{r}
 keywords <- c("$PROJ", "GROUPNAME", "TUBENAME")
 ws <- CytoML::open_flowjo_xml(Workspace)
-gs <- CytoML::flowjo_to_gatingset(ws, name=3, path = Location, keywords = keywords)
+gs <- CytoML::flowjo_to_gatingset(ws, name=4, path = Location, keywords = keywords)
 ```
 
 Basic metadata from the filenaming
@@ -232,10 +232,11 @@ MyData <- TidyThisMess(data=Stats, quadrantColumn="Node", parentColumn="parent")
 
 TheDataset <- left_join(Unified, MyData, by="sample")
 TheDataset <- TheDataset |> filter(!str_detect(bid, "NY")) |> select(-sample)
-TheDataset$Condition <- unlist(TheDataset$Condition)
+#TheDataset$Condition <- unlist(TheDataset$Condition)
+TheDataset <- TheDataset |> mutate(Condition="SEB")
 #View(TheDataset)
 
-write.csv(TheDataset, "data/AlphaBeta_PPD_09082025.csv", row.names=FALSE)
+write.csv(TheDataset, "data/AlphaBeta_SEB_09082025.csv", row.names=FALSE)
 ```
 
 ```{r}

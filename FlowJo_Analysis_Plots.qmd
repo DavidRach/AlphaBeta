@@ -1,0 +1,86 @@
+---
+title: "FlowJo_Analysis_Plots"
+toc: true
+---
+
+```{r}
+#| include: FALSE
+#| message: FALSE
+#| warning: FALSE
+library(dplyr)
+library(ggplot2)
+library(Coereba)
+```
+
+```{r}
+#| include: FALSE
+shape_sex <- c("Female" = 22, "Male" = 21)
+fill_sex <- c("Female" = "white", "Male" = "black")
+
+shape_ptype <- c("HU" = 22, "HEU-lo" = 21, "HEU-hi" = 21)
+fill_ptype <- c("HU" = "white", "HEU-lo" = "darkgray", "HEU-hi" = "black")
+
+shape_art <- c("HU" = 22, "HEU" = 21)
+fill_art <- c("HU" = "white", "HEU" = "black")
+
+shape_viral <- c("NoViral" = 22, "Viral" = 21)
+fill_viral <- c("NoViral" = "white", "Viral" = "black")
+```
+
+# Control
+
+```{r}
+#| include: FALSE
+Data <- read.csv("data/AlphaBeta_Control_09082025.csv", check.names=FALSE)
+Data$ptype <- factor(Data$ptype, levels = c("HU", "HEU-lo", "HEU-hi"))
+Data$timepoint <- factor(Data$timepoint, levels = c(0, 4, 9))
+#colnames(Data)
+
+View(Data)
+
+TheLength <- ncol(Data)
+
+TheExposurePlots <- map(names(Data)[c(13:101, 108:TheLength)], ~ Utility_LongitudinalBehemoth(data=Data, Variable=.x, GlobalFactor="timepoint", LocalFactor="ptype", shape_palette = shape_ptype,
+ fill_palette = fill_ptype))
+
+Luciernaga::Utility_Patchwork(x=TheExposurePlots, filename="AB_Ctrl_09082025", outfolder="data", thecolumns=1, therows=3, height=7, width=9)
+```
+
+# PPD
+
+```{r}
+#| include: FALSE
+Data <- read.csv("data/AlphaBeta_PPD_09082025.csv", check.names=FALSE)
+Data$ptype <- factor(Data$ptype, levels = c("HU", "HEU-lo", "HEU-hi"))
+Data$timepoint <- factor(Data$timepoint, levels = c(0, 4, 9))
+#colnames(Data)
+
+#View(Data)
+
+TheLength <- ncol(Data)
+
+TheExposurePlots <- map(names(Data)[c(13:101, 108:TheLength)], ~ Utility_LongitudinalBehemoth(data=Data, Variable=.x, GlobalFactor="timepoint", LocalFactor="ptype", shape_palette = shape_ptype,
+ fill_palette = fill_ptype))
+
+Luciernaga::Utility_Patchwork(x=TheExposurePlots, filename="AB_PPD_09082025", outfolder="data", thecolumns=1, therows=3, height=7, width=9)
+```
+
+# SEB
+
+```{r}
+#| include: FALSE
+Data <- read.csv("data/AlphaBeta_SEB_09082025.csv", check.names=FALSE)
+Data$ptype <- factor(Data$ptype, levels = c("HU", "HEU-lo", "HEU-hi"))
+Data$timepoint <- factor(Data$timepoint, levels = c(0, 4, 9))
+#colnames(Data)
+
+#View(Data)
+
+TheLength <- ncol(Data)
+
+TheExposurePlots <- map(names(Data)[c(13:101, 108:TheLength)], ~ Utility_LongitudinalBehemoth(data=Data, Variable=.x, GlobalFactor="timepoint", LocalFactor="ptype", shape_palette = shape_ptype,
+ fill_palette = fill_ptype))
+
+Luciernaga::Utility_Patchwork(x=TheExposurePlots, filename="AB_SEB_09082025", outfolder="data", thecolumns=1, therows=3, height=7, width=9)
+```
+
