@@ -1,0 +1,215 @@
+---
+title: "FlowJo_Analysis"
+format: html
+---
+
+Call in the metadata file
+```{r}
+Linux <- file.path("/home", "david", "Documents")
+Windows <- file.path("C:", "Users", "12692", "Documents")
+OperatingSystem <- Sys.info()["sysname"]
+if(OperatingSystem == "Linux"){OS <- Linux
+} else if (OperatingSystem == "Windows"){OS <- Windows}
+ReferenceData <- file.path(OS, "HEUData", "data")
+```
+
+Set factor shapes and fills for HEU status and infant sex
+```{r}
+shape_sex <- c("Female" = 22, "Male" = 21)
+fill_sex <- c("Female" = "white", "Male" = "black")
+
+shape_ptype <- c("HU" = 22, "HEU-lo" = 21, "HEU-hi" = 21)
+fill_ptype <- c("HU" = "white", "HEU-lo" = "darkgray", "HEU-hi" = "black")
+
+shape_art <- c("HU" = 22, "HEU" = 21)
+fill_art <- c("HU" = "white", "HEU" = "black")
+
+shape_viral <- c("NoViral" = 22, "Viral" = 21)
+fill_viral <- c("NoViral" = "white", "Viral" = "black")
+```
+
+
+Create the extraction functions
+```{r}
+NameYoink <- function(x){
+pattern <- "(INF|ND|NY)\\d{3}"
+result <- str_extract(x, pattern)
+result <- data.frame(result)
+colnames(result)[1] <- "specimen"
+result$specimen <- factor(result$specimen)
+return(result)
+}
+
+ConditionYoink <- function(x){
+pattern <- "Ctrl|PMA"
+result <- str_extract(x, pattern)
+result <- data.frame(result)
+colnames(result)[1] <- "condition"
+result$condition <- factor(result$condition)
+return(result)
+}
+```
+
+Load libraries
+```{r}
+library(dplyr)
+library(stringr)
+library(purrr)
+library(CytoML)
+```
+
+Locate the Workspace
+```{r}
+SSD <- file.path("/media", "david", "DavidSSD")
+Location <- file.path(SSD, "AlphaBeta", "Tcells")
+Workspace <- list.files(Location, pattern="AB_Tcells_Ctrl.wsp", full.names=TRUE)
+```
+
+Select the desired workspace group (2=Ctrl, 3=PPD, 4=SEB)
+```{r}
+keywords <- c("$PROJ", "GROUPNAME", "TUBENAME")
+ws <- CytoML::open_flowjo_xml(Workspace)
+gs <- CytoML::flowjo_to_gatingset(ws, name=2, path = Location, keywords = keywords)
+```
+
+Basic metadata from the filenaming
+
+```{r}
+pd <- pData(gs)
+Metadata <- pd |> dplyr::mutate(Condition = ConditionYoink(TUBENAME))
+
+Metadata1 <- Metadata |> mutate(timepoint = case_when(
+    stringr::str_detect(TUBENAME, "00_") ~ "00",
+    stringr::str_detect(TUBENAME, "04_") ~ "04",
+    stringr::str_detect(TUBENAME, "09_") ~ "09",
+    TRUE ~ "10"))|>
+     select(GROUPNAME, Condition, timepoint) |>
+     tibble::rownames_to_column("sample") |>
+     rename(bid=GROUPNAME)
+```
+
+Add in extended metadata
+
+```{r}
+Metadata1
+
+file <- list.files(ReferenceData, "U01Metadata2025.csv", full.names=TRUE)
+
+Metadata <- read.csv(file, check.names=FALSE) |>
+     select(bid, infant_sex, ptype, screen_vl, del_vl,
+     del_cd4, gestage_d1, delivdt, 
+     Infant_Collection_Date_4, Infant_Collection_Date_9)
+
+Metadata$screen_vl <- as.numeric(Metadata$screen_vl)
+Metadata$del_vl <- as.numeric(Metadata$del_vl)
+Metadata$del_cd4 <- as.numeric(Metadata$del_cd4)
+Metadata$delivdt <- lubridate::mdy(Metadata$delivdt)
+Metadata <- Metadata |> rename(FourMonthDate=Infant_Collection_Date_4, NineMonthDate=Infant_Collection_Date_9)
+Metadata$FourMonthDate <- lubridate::mdy(Metadata$FourMonthDate)
+Metadata$NineMonthDate <- lubridate::mdy(Metadata$NineMonthDate)
+
+Metadata$bid <- gsub("INF-", "", Metadata$bid)
+Metadata$bid <- sub("^0+", "", Metadata$bid)
+Metadata$bid <- sub("-[0-9]{1}", "", Metadata$bid)
+Metadata$bid <- str_pad(Metadata$bid, 4, pad="0")
+Metadata <- Metadata |> mutate(bid = ifelse(grepl("^[0-9]", bid), paste0("INF", bid), bid))
+Metadata <- Metadata |> unique()
+
+Metadata1$bid <- gsub("INF", "", Metadata1$bid)
+Metadata1$bid <- str_pad(Metadata1$bid, 4, pad="0")
+Metadata1 <- Metadata1 |> mutate(bid = ifelse(grepl("^[0-9]", bid), paste0("INF", bid), bid))
+#Dataset1 |> unique()
+
+Unified <- left_join(Metadata1, Metadata)
+```
+
+```{r}
+Stats <- flowWorkspace::gs_pop_get_stats(gs, type="count", path="full")
+Stats <- Stats |> mutate(Node=basename(pop)) |>
+     relocate(Node, .before="count") |> 
+     mutate(parent=basename(dirname(pop))) |>
+     relocate(parent, .after=Node) |> select(-pop)
+
+data <- Stats
+quadrantColumn <- "Node"
+parentColumn <- "parent"
+```
+
+```{r}
+TidyThisMess <- function(data, quadrantColumn, parentColumn){
+
+  ActualNodes <- data |> dplyr::filter(!str_detect(.data[[quadrantColumn]], "Q\\d{1,2}:"))
+
+  Quadrants <- data |> dplyr::filter(str_detect(.data[[quadrantColumn]], "Q\\d{1,2}:"))
+  Parents <- Quadrants |> pull(parent) |> unique()
+
+  Dataset <- purrr::map(.x=Parents, .f=InternallyMessy, quadrantData=Quadrants) |> bind_rows()
+  #Dataset |> pull(Node) |> unique()
+
+  Totality <- bind_rows(ActualNodes, Dataset)
+
+  MissedThese <- Totality |> dplyr::filter(str_detect(parent, "Q\\d{1,2}:")) |> 
+    pull(parent) |> unique()
+
+  AddBack <- data |> filter(.data[[quadrantColumn]] %in% MissedThese)
+  Totality <- bind_rows(Totality, AddBack)
+
+  Totality
+
+}
+
+InternallyMessy <- function(x, quadrantData){
+    Messy <- quadrantData |> dplyr::filter(parent %in% x)
+    MessyA <- Messy |> mutate(Node = str_remove_all(Node, "Q\\d{1,2}:")) |>
+        mutate(Node = str_remove_all(Node, "\\s")) |> filter(str_count(Node, "-") != 2)
+
+    MessyA <- MessyA |>
+        tidyr::separate(Node, into = c("First", "Second"), sep = ",", remove = FALSE)
+
+    FirstPositive <- MessyA |> dplyr::filter(str_detect(First, "\\+"))
+    FirstPositive <- FirstPositive |> mutate(Second = gsub("+", "", fixed=TRUE, Second)) |>
+        mutate(Second = gsub("-", "", fixed=TRUE, Second))
+    FirstPositive <- FirstPositive |> group_by(sample, First, Second) |>
+         filter(n() >= 2) |> mutate(Total = sum(count)) |> ungroup()
+    #View(FirstPositive)
+
+    DoublePositive <- FirstPositive |> filter(str_count(Node, "\\+") == 2) |>
+         mutate(Node=gsub(",", "", Node))
+    DoublePositive <- DoublePositive |> mutate(Pop=paste(parent, Node, sep="_")) |>
+         select(-First, -Second, -Total, -parent, -Node) |> rename(Total=count)
+
+    FirstPositive <- FirstPositive |> mutate(First = gsub("+", "", fixed=TRUE, First))
+    FirstPositive <- FirstPositive |> group_by(sample, First) |>
+         select(First, parent, Total) |> unique() |> ungroup()
+    FirstPositive <- FirstPositive |> mutate(Pop=paste(parent, First, sep="_")) |> 
+        select(-First, -parent)
+
+    SecondPositive <- MessyA |> dplyr::filter(str_detect(Second, "\\+"))
+    SecondPositive <- SecondPositive |> mutate(First = gsub("+", "", fixed=TRUE, First)) |>
+        mutate(First = gsub("-", "", fixed=TRUE, First))
+    SecondPositive <- SecondPositive |> group_by(sample, First, Second) |>
+         filter(n() >= 2) |> mutate(Total = sum(count)) |> ungroup()
+    #View(SecondPositive)
+
+    SecondPositive <- SecondPositive |> mutate(Second = gsub("+", "", fixed=TRUE, Second))
+    SecondPositive <- SecondPositive |> group_by(sample, Second) |>
+         select(Second, parent, Total) |> unique() |> ungroup()
+    SecondPositive <- SecondPositive |> mutate(Pop=paste(parent, Second, sep="_")) |> 
+        select(-Second, -parent)
+
+    #FirstPositive |> pull(Pop) |> unique()
+    #SecondPositive |> pull(Pop) |> unique()
+    #DoublePositive |> pull(Pop) |> unique()
+
+    All <- bind_rows(FirstPositive, SecondPositive, DoublePositive)
+    All <- All |> rename(Node=Pop, count=Total) |> mutate(parent = x)
+    All <- All |> relocate(count, .after=parent)
+    return(All)
+}
+
+
+
+
+```
+
+
