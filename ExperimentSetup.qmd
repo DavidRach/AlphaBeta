@@ -12,9 +12,10 @@ NewExperiment()
 ```
 
 ```{r}
-AddSpecimens(name="INF614-1", vials=6)
-AddSpecimens(name="IN622-0", vials=6)
-AddSpecimens(name="INF627-5", vials=6)
+AddSpecimens(name="INF069-", vials=5)
+AddSpecimens(name="IN077-", vials=5)
+AddSpecimens(name="INF197-", vials=1)
+AddSpecimens(name="INF427-", vials=1)
 AddSpecimens(name="NY068", vials=1)
 AddSpecimens(name="ND050", vials=1)
 #AddSpecimens(name="ND006", vials=1)
