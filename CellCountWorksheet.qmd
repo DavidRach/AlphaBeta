@@ -19,7 +19,7 @@ library(Luciernaga)
 # Copying the files 
 
 ```{r}
-Experiment <- "AB_09"
+Experiment <- "AB_10"
 ```
 
 Either leave date NULL or specify the date name of the LabNotebook folder
