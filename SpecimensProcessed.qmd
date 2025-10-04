@@ -1,0 +1,24 @@
+---
+title: "Specimens Processed"
+format: html
+---
+
+```{r}
+ThawCounts <- list.files(pattern="ThawCounts.csv", recursive=TRUE)
+```
+
+```{r}
+CSV_Extract <- function(x){
+    Data <- utils::read.csv(x, check.names=FALSE)
+    Experiment <- basename(x)
+    Experiment <- gsub("_ThawCounts.csv", "", Experiment)
+    Data <- Data |> dplyr::mutate(Experiment=Experiment)
+    return(Data)
+}
+```
+
+```{r}
+Data <- purrr::map(.f=CSV_Extract, .x=ThawCounts) |> dplyr::bind_rows()
+
+Data |> dplyr::arrange(bid) |> dplyr::pull(bid) |> unique()
+```
