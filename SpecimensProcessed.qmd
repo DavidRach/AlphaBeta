@@ -5,6 +5,8 @@ format: html
 
 ```{r}
 ThawCounts <- list.files(pattern="ThawCounts.csv", recursive=TRUE)
+ThawCounts <- ThawCounts[-1]
+x <- ThawCounts[1]
 ```
 
 ```{r}
@@ -19,6 +21,68 @@ CSV_Extract <- function(x){
 
 ```{r}
 Data <- purrr::map(.f=CSV_Extract, .x=ThawCounts) |> dplyr::bind_rows()
+Data <- Data |> dplyr::rename(bid = name)
 
-Data |> dplyr::arrange(bid) |> dplyr::pull(bid) |> unique()
+IDs <- Data |> dplyr::arrange(bid) |> dplyr::pull(bid)
+IDs <- sub("_.*", "", IDs) |> unique()
+IDs <- sub("-.*", "", IDs) 
+
+AlphaBeta <- IDs[grep("INF", IDs)]
+```
+
+# Retrieve Winters Myeloid
+
+```{r}
+Location <- "/home/david/Documents/SDY_Myeloid"
+CSVs <- list.files(path=Location, pattern="specimens.csv", recursive=TRUE, full.names=TRUE)
+```
+
+```{r}
+CSV_Extract <- function(x){
+    Data <- utils::read.csv(x, check.names=FALSE)
+    Experiment <- gsub("/specimens.csv", "", fixed=TRUE, x)
+    Experiment <- gsub("LabNotebook/", "", fixed=TRUE, Experiment)
+    Data <- Data |> dplyr::mutate(Experiment=Experiment)
+    return(Data)
+}
+```
+
+```{r}
+Data <- purrr::map(.f=CSV_Extract, .x=CSVs) |> dplyr::bind_rows()
+
+TheBids <- Data |> dplyr::arrange(specimen) |> dplyr::pull(specimen) |> unique()
+```
+
+```{r}
+KingsleyFile <- "/home/david/Desktop/LocalHEU/Kingsley_Aug_2023.csv"
+Metadata <- read.csv(KingsleyFile, check.names=FALSE)
+
+Metadata <- Metadata |> select(bid, sid, site, infant_sex, ptype, screen_vl, del_vl, del_cd4, gestage_d1,ncbmc, ninfpbmc4, ninfpbmc9)
+```
+
+```{r}
+Metadata$`bid` <- gsub("INF-", "", Metadata$`bid`)
+Metadata$`bid` <- sub("^0+", "", Metadata$`bid`)
+Metadata$`bid` <- sub("-[0-9]{1}", "", Metadata$`bid`)
+Metadata$bid <- stringr::str_pad(Metadata$bid, 3, pad = "0")
+Metadata <- Metadata %>% mutate(bid = ifelse(grepl("^[0-9]", bid), paste0("INF", bid), bid))
+```
+
+```{r}
+Utilized <- Metadata |> filter(bid %in% TheBids)
+Utilized$ptype <- factor(Utilized$ptype, levels=c("HU", "HEU-lo", "HEU-hi"))
+``` 
+
+# Deriving already acquired counts
+
+```{r}
+PositiveSelection <- Utilized |> filter(!bid %in% AlphaBeta)
+PositiveSelection |>  count(ptype, infant_sex)
+```
+
+# Removing already acquired
+
+```{r}
+NegativeSelection <- Utilized |> filter(!bid %in% AlphaBeta)
+write.csv(NegativeSelection, "SelectionChoices.csv", row.names=FALSE)
 ```
