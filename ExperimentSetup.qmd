@@ -12,17 +12,17 @@ NewExperiment()
 ```
 
 ```{r}
-AddSpecimens(name="INF003-", vials=5)
-AddSpecimens(name="IN067-", vials=5)
-AddSpecimens(name="INF320-", vials=1)
-AddSpecimens(name="INF058-", vials=4)
+AddSpecimens(name="INF046-", vials=5)
+AddSpecimens(name="IN063-", vials=5)
+AddSpecimens(name="INF101-", vials=5)
+#AddSpecimens(name="INF058-", vials=4)
 AddSpecimens(name="NY068", vials=1)
 AddSpecimens(name="ND050", vials=1)
 #AddSpecimens(name="ND006", vials=1)
 ```
 
 ```{r}
-HEULog:::ExperimentTemplate(extras=2, blankpages=7)
+HEULog:::ExperimentTemplate(extras=2, blankpages=7) #experiment for alternate dates
 ```
 
 ```{r}

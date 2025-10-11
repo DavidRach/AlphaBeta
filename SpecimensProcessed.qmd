@@ -84,5 +84,6 @@ PositiveSelection |>  count(ptype, infant_sex)
 
 ```{r}
 NegativeSelection <- Utilized |> filter(!bid %in% AlphaBeta)
+NegativeSelection <- NegativeSelection |> arrange(bid)
 write.csv(NegativeSelection, "SelectionChoices.csv", row.names=FALSE)
 ```
