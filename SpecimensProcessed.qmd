@@ -4,6 +4,10 @@ format: html
 ---
 
 ```{r}
+library(dplyr)
+```
+
+```{r}
 ThawCounts <- list.files(pattern="ThawCounts.csv", recursive=TRUE)
 ThawCounts <- ThawCounts[-1]
 x <- ThawCounts[1]
@@ -69,8 +73,15 @@ Metadata <- Metadata %>% mutate(bid = ifelse(grepl("^[0-9]", bid), paste0("INF",
 ```
 
 ```{r}
+#TheseGuys <- c("INF008", "INF056", "INF391", "INF403", TheBids)
+
 Utilized <- Metadata |> filter(bid %in% TheBids)
 Utilized$ptype <- factor(Utilized$ptype, levels=c("HU", "HEU-lo", "HEU-hi"))
+Utilized |>  count(ptype, infant_sex)
+
+UtilizedNo <- Metadata |> filter(!bid %in% TheBids)
+write.csv(UtilizedNo, "/home/david/Desktop/SelectionSpecimens.csv", row.names=FALSE)
+
 ``` 
 
 # Deriving already acquired counts
